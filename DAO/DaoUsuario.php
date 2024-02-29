@@ -68,19 +68,21 @@ class DaoUsuario
 
         $nome = null;
         $matricula = null;
+        $empresa = null;
+        $cargo = null;
         $login = null;
         $senha = null;
         $status = null;
 
         try {
-            $stmt = $this->conexao->prepare("SELECT NOME, MATRICULA, LOGIN, SENHA, STATUS_USUARIO FROM {$this->TBL_USUARIO} WHERE ID_USUARIO = ?");
+            $stmt = $this->conexao->prepare("SELECT NOME, MATRICULA, EMPRESA, CARGO, LOGIN, SENHA, STATUS_USUARIO FROM {$this->TBL_USUARIO} WHERE ID_USUARIO = ?");
             $stmt->bind_param("i", $idUsuario);
 
             $stmt->execute();
-            $stmt->bind_result($nome, $matricula, $login, $senha, $status);
+            $stmt->bind_result($nome, $matricula, $empresa, $cargo, $login, $senha, $status);
 
             if ($stmt->fetch()) {
-                return new Usuario($idUsuario, $nome, $matricula, $login, $senha, $status);
+                return new Usuario($idUsuario, $nome, $matricula, $empresa, $cargo, $login, $senha, $status);
             } else {
                 return false;
             }

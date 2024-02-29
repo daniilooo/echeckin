@@ -72,7 +72,7 @@ class DaoCargo{
             $result = $stmt->get_result();
             
             while($row = $result->fetch_assoc()){
-                $cargo = new Cargo($row['ID_CARGO'], $row['DESCRICAO_CARGO'], $row['STATUS_CARGO'], $row['NIVEL_ACESSO']);
+                $cargo = new Cargo($row['ID_CARGO'], $row['DESCRICAO_CARGO'], $row['STATUS_CARGO'], $row['FK_NIVEL_ACESSO']);
                 $listaDeCargos[] = $cargo;
             }
 
