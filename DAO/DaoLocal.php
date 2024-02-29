@@ -52,7 +52,7 @@ class DaoLocal{
             $row = $result->fetch_assoc();
 
             if($row != null){
-                return new Local($row['ID_LOCAL'], $row['FK_EMPRESA'], $row['FK_TIPO_LOCAL'], $row['DESC_LOCAL'], $row['STATUS_LOCAL']);
+                return new Local($idLocal, $row['FK_EMPRESA'], $row['FK_TIPO_LOCAL'], $row['DESC_LOCAL'], $row['STATUS_LOCAL']);
             } else {
                 return null;
             }

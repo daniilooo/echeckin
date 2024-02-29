@@ -60,7 +60,7 @@ if (isset($_GET['idEmpresa'])) {
                         <th>
                             <button class="btn btn-danger">Alterar status do local</button>
                             <button class="btn btn-primary">Gerar relatório do local</button>
-                            <button class="btn btn-secondary">Gerar checkpoint</button>
+                            <button class="btn btn-secondary" onclick="gerarCheckPoint(<?php echo $local->getIdLocal() ?>)">Gerar checkpoint</button>
                         </th>
                     </tr>
                     <?php
@@ -72,6 +72,11 @@ if (isset($_GET['idEmpresa'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function gerarCheckPoint(idLocal){
+            window.location.href = "../public/checkPoint.php?idLocal="+idLocal;
+        }
+    </script>
     
 </body>
 
