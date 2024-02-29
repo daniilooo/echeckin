@@ -17,11 +17,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         session_start();
         $_SESSION['idUsuario'] = $daoLogin->retornarUsuario($login);
-        header('Location: ../public/index2.php?isLogin=0');
-        
+        $_SESSION['login'] = true;
+        header('Location: ../public/index2.php');
         exit;
+        
     } else {
-        header('Location: ../index.php?isLogin=0');
+        header('Location: ../index.php');
         exit;
     }
 
