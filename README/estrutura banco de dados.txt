@@ -1,0 +1,65 @@
+A modelagem do banco de dados pode ser ajustada com base nas necessidades específicas do projeto.
+
+### Tabelas Propostas:
+
+1. **Tabela `ilhas`:**
+   - `id_ilha` (Chave Primária)
+   - `nome_ilha`
+   - Outros campos relevantes para as ilhas de carregamento/descarregamento.
+
+2. **Tabela `operadores`:**
+   - `id_operador` (Chave Primária)
+   - `nome_operador`
+   - Outros campos relacionados aos operadores autorizados.
+
+3. **Tabela `checkins_ilhas`:**
+   - `id_checkin` (Chave Primária)
+   - `id_ilha` (Chave Estrangeira referenciando `ilhas`)
+   - `id_operador` (Chave Estrangeira referenciando `operadores`)
+   - `horario_checkin`
+
+4. **Tabela `pontos_ronda`:**
+   - `id_ponto` (Chave Primária)
+   - `nome_ponto`
+   - Outros campos relevantes para os pontos de ronda.
+
+5. **Tabela `guardas`:**
+   - `id_guarda` (Chave Primária)
+   - `nome_guarda`
+   - Outros campos relacionados aos seguranças.
+
+6. **Tabela `checkins_rondas`:**
+   - `id_checkin` (Chave Primária)
+   - `id_ponto` (Chave Estrangeira referenciando `pontos_ronda`)
+   - `id_guarda` (Chave Estrangeira referenciando `guardas`)
+   - `horario_checkin`
+
+### Diagrama Entidade-Relacionamento (ER):
+
+```
++----------------+          +----------------+          +------------------+
+|     ilhas      |          |   operadores   |          | checkins_ilhas   |
++----------------+          +----------------+          +------------------+
+| id_ilha (PK)   |1    N   1| id_operador (PK)| N    1   | id_checkin (PK)  |
+| nome_ilha       |----------| nome_operador   |----------| id_ilha (FK)     |
+| ...            |          | ...            |          | id_operador (FK) |
++----------------+          +----------------+          | horario_checkin  |
+                                                           +------------------+
+                                                                     |
+                                                                     |
+                                                                     v
++------------------+         +-----------------+          +-------------------+
+| pontos_ronda     |         |   guardas       |          | checkins_rondas   |
++------------------+         +-----------------+          +-------------------+
+| id_ponto (PK)    |1    N  1| id_guarda (PK)  | N    1   | id_checkin (PK)   |
+| nome_ponto       |--------- | nome_guarda     |----------| id_ponto (FK)     |
+| ...              |         | ...             |          | id_guarda (FK)    |
++------------------+         +-----------------+          | horario_checkin   |
+                                                            +-------------------+
+```
+
+### Considerações:
+
+- As tabelas `ilhas` e `pontos_ronda` representam os locais onde os check-ins ocorrem.
+- As tabelas `operadores` e `guardas` contêm informações sobre os operadores autorizados e os seguranças.
+- As tabelas `checkins_ilhas` e `checkins_rondas` registram os eventos de check-in associados a cada local.

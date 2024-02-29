@@ -1,0 +1,78 @@
+Estrutura do projeto de check-in nas ilhas de carregamento/descarregamento e ronda de seguranças em PHP utilizando a arquitetura MVC:
+
+### Estrutura de Diretórios:
+
+1. **app:**
+   - **Controllers:**
+     - `IslandController.php`: Controlador para as ações relacionadas às ilhas de carregamento/descarregamento.
+     - `SecurityController.php`: Controlador para as ações relacionadas à ronda dos seguranças.
+
+   - **Models:**
+     - `IslandModel.php`: Modelo para as operações relacionadas às ilhas.
+     - `SecurityModel.php`: Modelo para as operações relacionadas à ronda de seguranças.
+
+   - **Views:**
+     - `islands/`: Diretório para as views relacionadas às ilhas.
+     - `security/`: Diretório para as views relacionadas à ronda de seguranças.
+
+2. **config:**
+   - `config.php`: Arquivo de configuração geral do projeto.
+
+3. **public:**
+   - `css/`: Diretório para arquivos CSS.
+   - `js/`: Diretório para arquivos JavaScript.
+   - `img/`: Diretório para imagens.
+   - `index.php`: Ponto de entrada do aplicativo.
+
+4. **vendor:**
+   - Diretório para dependências de terceiros, gerenciado pelo Composer.
+
+5. **templates:**
+   - Diretório para layouts e templates reutilizáveis.
+
+6. **utils:**
+   - `Database.php`: Classe para conexão e interações com o banco de dados.
+
+### Fluxo de Controle:
+
+1. **index.php:**
+   - Carrega as configurações do projeto (`config.php`).
+   - Inclui o autoload de classes (usando Composer, por exemplo).
+   - Encaminha as requisições para os controladores apropriados com base na URL.
+
+2. **Controllers:**
+   - Recebem as requisições e chamam os métodos apropriados nos modelos.
+   - Interagem com os modelos para obter dados.
+   - Passam os dados para as views correspondentes.
+
+3. **Models:**
+   - Contêm lógica de negócios e operações no banco de dados.
+   - Retornam dados para os controladores.
+
+4. **Views:**
+   - Apresentam os dados aos usuários.
+   - Podem incluir formulários, tabelas, ou outros elementos de interface.
+
+### Exemplo de Roteamento (Simples):
+
+No arquivo `index.php`:
+
+```php
+<?php
+require_once 'config/config.php';
+require_once 'vendor/autoload.php';
+
+// Roteamento básico
+if ($_GET['action'] === 'islandCheckIn') {
+    $islandController = new IslandController();
+    $islandController->checkInAction();
+} elseif ($_GET['action'] === 'securityCheckIn') {
+    $securityController = new SecurityController();
+    $securityController->checkInAction();
+}
+// ... outros roteamentos ...
+
+?>
+```
+
+Essa é uma estrutura básica e você pode expandi-la conforme a complexidade do seu projeto. Certifique-se de aplicar práticas de segurança, como validação de entrada, tratamento de erros e prevenção contra ataques comuns, especialmente ao lidar com dados sensíveis e interações com o banco de dados. Além disso, considere o uso de um framework PHP (como Laravel ou Symfony) para simplificar ainda mais o desenvolvimento.
