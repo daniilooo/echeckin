@@ -97,17 +97,46 @@ class DaoUsuario
         }
     }
 
-    function contagemDeUsuarios(){
-        try{
+    function contarUsuarioPorEmpresa(){
+        $qtdUserEmp = [];
+        try {
+            $stmt = $this->conexao->prepare("SELECT EMPRESA, COUNT(*) AS QTD_USUARIOS FROM {$this->TBL_USUARIO} GROUP BY EMPRESA");
+            $stmt->execute();
+    
+            $result = $stmt->get_result();
+    
+            while ($row = $result->fetch_assoc()) {
+                $qtdUserEmp[] = [
+                    'empresa' => $row['EMPRESA'],
+                    'quantUser' => $row['QTD_USUARIOS']
+                ];
+            };
+    
+            return $qtdUserEmp;
+        } catch (Exception $e) {
+            $dataHoraFormatada = new DateTime();
+            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.contarUsuarioPorEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $conexaoTblErro = new Conexao();
+            $daoErro = new DaoErro($conexaoTblErro->conectar());
+            $daoErro->inserirErro($erro);
+            return -2;
+        }
+    }
+    
+
+
+    function contagemDeUsuarios()
+    {
+        try {
             $stmt = $this->conexao->prepare("SELECT COUNT(*) AS QUANTIDADE_USUARIOS FROM {$this->TBL_USUARIO}");
             $stmt->execute();
 
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
 
-            if($row != null){
+            if ($row != null) {
                 return $row['QUANTIDADE_USUARIOS'];
-            } 
+            }
         } catch (Exception $e) {
             $dataHoraFormatada = new DateTime();
             $erro = new Erro(0, $e->getMessage(), "DaoUsuario.contagemDeUsuarios", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
@@ -187,7 +216,7 @@ class DaoUsuario
 
                 $stmt = $this->conexao->prepare("UPDATE {$this->TBL_USUARIO} SET SENHA = ? WHERE ID_USUARIO = ?");
                 $stmt->bind_param("si", password_hash($novaSenha, PASSWORD_DEFAULT), $idUsuario);
-                
+
                 if ($stmt->execute()) {
                     return $stmt->affected_rows;
                 } else {

@@ -21,6 +21,10 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
     $listaDeEmpresas = $daoEmpresa->gerarListaEmpresas();
     $listaDeLocais = $daoLocal->gerarlistaDeLocais();
+    $qtdUsuarios = $daoUsuario->contarUsuarioPorEmpresa();
+
+    
+
 }
 
 function status($flagStatus){
@@ -42,7 +46,7 @@ function status($flagStatus){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>iCloud-like Page</title>
+    <title>eCheckin - Gerenciar locais</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -133,7 +137,15 @@ function status($flagStatus){
                                 Quantidade de locais cadastrados:
                                 <?php echo $empresa->getQtdLocais() ?><br>
                                 Quantidade de usuarios cadastrados:
-                                <?php echo "000" ?>
+                                <?php 
+                                    foreach($qtdUsuarios as $quantidade){
+                                        if($quantidade['empresa'] == $empresa->getIdEmpresa()){
+                                            echo $quantidade['quantUser'];
+                                        } else {
+                                            echo "0";
+                                        }
+                                    }
+                                ?>
                             </p>
                             <?php if($empresa->getQtdLocais() > 0){?>
                             <table class="table">

@@ -98,7 +98,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <a class="nav-link" href="gerenciamentoEmpresas.php">Gerenciar<br>empresas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="aviso()">Gerenciar<br>Locais cadastrados</a>
+                        <a class="nav-link" href="gerenciarLocais.php">Gerenciar<br>Locais cadastrados</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Relatórios<br>disponíveis</a>
