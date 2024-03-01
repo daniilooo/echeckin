@@ -1,10 +1,10 @@
 <?php
 
 include_once(__DIR__ . '/../DAO/DaoUsuario.php');
-include_once(__DIR__ . '/../DAO/DaoEmpresa.php');
-
+include_once(__DIR__ . '/../DAO/DaoLog.php');
 
 session_start();
+
 $sessionStatus = session_status();
 
 if (!isset($_SESSION['login'])) {
@@ -16,22 +16,26 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $idUsuario = $_SESSION['idUsuario'];
     $conexao = new Conexao();
     $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);
-    $daoEmpresa = new DaoEmpresa($conexao->conectar(), $idUsuario);
+    $daoLog = new DaoLog($conexao->conectar(), $idUsuario);
 
     $usuario = $daoUsuario->selecionarUsuario($idUsuario);
-    $listaDeEmpresa = $daoEmpresa->gerarListaEmpresas();
+    $listaDeLogs = $daoLog->gerarListaLog();
 
-}
+    function usuario($daoUsuario, $idUsuario)
+    {
+        $usuario = $daoUsuario->selecionarUsuario($idUsuario);
 
-function status($status){
-    switch($status){
-        case 0:
-            return "Inativo";
-        case 1:
-            return "Ativo";
-        default:
-            return "Status desconhecido";
+        if ($usuario != null) {
+            $dadosUsuario = [
+                'idUsuario' => $usuario->getIdUsuario(),
+                'nome' => $usuario->getNome()
+            ];
+
+            return $dadosUsuario;
+        }
     }
+
+
 }
 
 ?>
@@ -42,7 +46,7 @@ function status($status){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>eCheckin - Gerenciar Empresas cadastradas</title>
+    <title>eCheckin - Gerenciar Usuários</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -68,10 +72,24 @@ function status($status){
         .user-box {
             border-radius: 5px;
         }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #007bff;
+            /* Cor de fundo da faixa */
+            color: white;
+            /* Cor do texto */
+            text-align: center;
+            line-height: 20px;
+            /* Altura da faixa */
+        }
     </style>
 </head>
 
 <body>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="#">eCheckin</a>
@@ -91,7 +109,7 @@ function status($status){
                     <a class="nav-link" href="gerenciamentoEmpresas.php">Gerenciar<br>empresas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Gerenciar<br>Locais cadastrados</a>
+                    <a class="nav-link" href="#" onclick="aviso()">Gerenciar<br>Locais cadastrados</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Relatórios<br>disponíveis</a>
@@ -116,41 +134,49 @@ function status($status){
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Gerenciar Empresas</h5>
+                        <h5 class="card-title">Verificar Log do sistema</h5>
 
-                        <!-- Formulário de busca -->
                         <form class="form-inline mb-3 w-100">
                             <div class="form-group mr-2 flex-grow-1">
-                                <input type="text" class="form-control w-100" placeholder="Buscar por razão social">
+                                <input type="text" class="form-control w-100" placeholder="Buscar por LOG">
                             </div>
-                            <button type="submit" class="btn btn-primary">Buscar empresa</button>
+                            <button type="submit" class="btn btn-primary">Buscar</button>
                         </form>
-
+                        
                         <!-- Tabela de usuários -->
                         <div class="mx-auto"> <!-- Adicionado para centralizar horizontalmente -->
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Razão social</th>
-                                        <th>CNPJ</th>
-                                        <th>Status</th>
-                                        <th>Qtde. locais ativos</th>
-                                        <th>Ações</th>                                      
+                                        <th>ID LOG</th>
+                                        <th>LOG</th>
+                                        <th>Data e Hora</th>
+                                        <th>Usuário</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($listaDeEmpresa as $empresa){?>
-                                    <tr>
-                                        <td><a href="#"><?php echo $empresa->getRazaoSocial() ?></a></td>
-                                        <td><?php echo $empresa->getCnpj() ?></td>
-                                        <td><?php echo status($empresa->getStatusEmpresa()) ?></td>
-                                        <td><?php echo $empresa->getQtdLocais() ?></td>
-                                        <td>
-                                            <button class="btn btn-primary">Relatório</button>
-                                            <button class="btn btn-danger">Inativar</button>
-                                        </td>
-                                    <tr>
-                                    <?php }?>
+                                    <?php foreach ($listaDeLogs as $log) { ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $log->getIdLog() ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $log->getRegLog() ?>
+                                            </td>
+                                            <td>
+                                                <?php echo (new DateTime($log->getDataHora()))->format('d/m/Y H:i:s') ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                $dadosUsuario = usuario($daoUsuario, $usuario->getIdUsuario());
+                                                if (count($dadosUsuario) > 0) {
+                                                    echo "<a href='#' onClick='verificarUsuario(".$dadosUsuario['idUsuario'].")'>".$dadosUsuario['nome']."</a>";
+                                                }
+                                                ?>
+
+                                            </td>
+                                        <tr>
+                                        <?php } ?>
                                 </tbody>
                             </table>
                         </div>
@@ -160,7 +186,14 @@ function status($status){
         </div>
 
     </div>
-
+    <footer>
+        by PRODEV - Desenvolvimento de sistemas.
+    </footer>
+    <script>
+        function verificarUsuario(idUsuario){
+            alert('ID DO USUARIO: '+idUsuario);
+        }
+    </script>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

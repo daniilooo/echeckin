@@ -59,7 +59,8 @@ class Erro
 
     function getData()
     {
-        return $this->data;
+        $dataHora = $this->data;
+        return $dataHora->format('d/m/Y H:i:s');
     }
 
     function getUsuario()
@@ -69,13 +70,13 @@ class Erro
 
     function __toString()
     {
-        $dataFormatada = $this->getData()->format('d/m/Y H:i:s');
+        
 
         return "<br>
                 ID erro: " . $this->getIdErro() . "<br>
                 Erro: " . $this->getErro() . "<br>
                 Local: " . $this->getLocal() . "<br>
-                Data e hora da ocorrência: " . $dataFormatada . "<br>
+                Data e hora da ocorrência: " . $this->getData() . "<br>
                 Usuario: " . $this->getUsuario();
     }
 

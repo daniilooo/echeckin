@@ -46,7 +46,7 @@ class DaoLog{
         $idUsuario = null;
 
         try{
-            $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_LOG}");
+            $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_LOG} ORDER By ID_LOG desc");
             $stmt->execute();
 
             $stmt->bind_result($idLog, $regLog, $dataHora, $idUsuario);

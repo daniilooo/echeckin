@@ -23,9 +23,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $_SESSION['statusUsuario'] = $usuario->getStatusUsuario();
 
     $contagemColab = $daoUsuario->contagemDeUsuarios();
-    
+
     $ultimoLog = (new DaoLog($conexao->conectar(), $_SESSION['idUsuario']))->recuperarUltimoLog();
-    
+
 
     ?>
 
@@ -61,6 +61,19 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             .user-box {
                 border-radius: 5px
             }
+
+            footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                background-color: #007bff;
+                /* Cor de fundo da faixa */
+                color: white;
+                /* Cor do texto */
+                text-align: center;
+                line-height: 20px;
+                /* Altura da faixa */
+            }
         </style>
     </head>
 
@@ -82,10 +95,10 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <a class="nav-link" href="gerenciamentoUsuarios.php">Gerenciar<br>usuários</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Gerenciar<br>empresas</a>
+                        <a class="nav-link" href="gerenciamentoEmpresas.php">Gerenciar<br>empresas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Gerenciar<br>Locais cadastrados</a>
+                        <a class="nav-link" href="#" onclick="aviso()">Gerenciar<br>Locais cadastrados</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Relatórios<br>disponíveis</a>
@@ -94,7 +107,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <a class="nav-link" href="#">Manual do<br>sistema</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link user-box" style="background-color: #B0C4DE;"><?php echo $usuario->getNome ()?><br>Gerenciar conta</a>
+                        <a href="" class="nav-link user-box" style="background-color: #B0C4DE;">
+                            <?php echo $usuario->getNome() ?><br>Gerenciar conta
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -107,9 +122,12 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Usuários</h5>
-                            <p class="card-text">Hoje existem <?php echo $contagemColab?> usuários cadastrados na base.</p>
+                            <p class="card-text">Hoje existem
+                                <?php echo $contagemColab ?> usuários cadastrados na base.
+                            </p>
                             <a href="gerenciamentoUsuarios.php" class="btn btn-primary">Gerenciar usuários</a>
                             <a href="#" class="btn btn-primary">Cadastrar novo usuário</a>
+                            <a href="#" class="btn btn-primary">Gerenciar cargos</a>
                         </div>
                     </div>
                 </div>
@@ -117,8 +135,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Empresas</h5>
-                            <p class="card-text">Explore your photo library.</p>
-                            <a href="#" class="btn btn-primary">Gerenciar empresa</a>
+                            <p class="card-text">Veja e gerencie todas as empresas cadastradas no sistema.</p>
+                            <a href="gerenciamentoEmpresas.php" class="btn btn-primary">Gerenciar empresa</a>
                             <a href="#" class="btn btn-primary">Cadastrar nova empresa</a>
                         </div>
                     </div>
@@ -128,7 +146,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <div class="card-body">
                             <h5 class="card-title">Locais</h5>
                             <p class="card-text">Check your emails on iCloud.</p>
-                            <a href="#" class="btn btn-primary">Gerenciar locais cadastrados</a>
+                            <a href="#" class="btn btn-primary">Gerenciar locais</a>
                             <a href="#" class="btn btn-primary">Gerar placas de checkpoint</a>
                         </div>
                     </div>
@@ -137,9 +155,12 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Log de Atividas</h5>
-                            <p class="card-text"><?php echo $ultimoLog->getRegLog()?><br><?php echo $ultimoLog->getDataHora()?></p>
-                            
-                            <a href="#" class="btn btn-primary">Verificar log completo</a>
+                            <p class="card-text">
+                                <?php echo $ultimoLog->getRegLog() ?><br>
+                                <?php echo $ultimoLog->getDataHora() ?>
+                            </p>
+
+                            <a href="verificarLogAtividade.php" class="btn btn-primary">Verificar log completo</a>
                         </div>
                     </div>
                 </div>
@@ -166,7 +187,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <div class="card-body">
                             <h5 class="card-title">DEBUG</h5>
                             <p class="card-text">Ferramenta direciona apenas para o desenvolvedor.</p>
-                            <a href="#" class="btn btn-danger">DEBUG</a>                            
+                            <a href="debugSistema.php" class="btn btn-danger">DEBUG</a>
                         </div>
                     </div>
                 </div>
@@ -175,17 +196,25 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <div class="card-body">
                             <h5 class="card-title">Reparo e alteração</h5>
                             <p class="card-text">Canal de solicitação de alteração e reparo no siste</p>
-                            <a href="#" class="btn btn-danger">Enviar solicitação</a>                            
+                            <a href="#" class="btn btn-danger">Enviar solicitação</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <footer>
+            by PRODEV - Desenvolvimento de sistemas.
+        </footer>
         <!-- Bootstrap JS and dependencies -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            function aviso() {
+                alert("Função em fase de implementação, para mais informações, contate o desenvolvedor.")
+            }
+        </script>
 
     </body>
 

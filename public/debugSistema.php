@@ -1,10 +1,10 @@
 <?php
 
 include_once(__DIR__ . '/../DAO/DaoUsuario.php');
-include_once(__DIR__ . '/../DAO/DaoEmpresa.php');
-
+include_once(__DIR__ . '/../DAO/DaoErro.php');
 
 session_start();
+
 $sessionStatus = session_status();
 
 if (!isset($_SESSION['login'])) {
@@ -12,26 +12,13 @@ if (!isset($_SESSION['login'])) {
 }
 
 if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
-
     $idUsuario = $_SESSION['idUsuario'];
     $conexao = new Conexao();
     $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);
-    $daoEmpresa = new DaoEmpresa($conexao->conectar(), $idUsuario);
+    $daoErro = new DaoErro($conexao->conectar());
 
     $usuario = $daoUsuario->selecionarUsuario($idUsuario);
-    $listaDeEmpresa = $daoEmpresa->gerarListaEmpresas();
-
-}
-
-function status($status){
-    switch($status){
-        case 0:
-            return "Inativo";
-        case 1:
-            return "Ativo";
-        default:
-            return "Status desconhecido";
-    }
+    $listaDeErro = $daoErro->gerarListaErros();
 }
 
 ?>
@@ -42,7 +29,7 @@ function status($status){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>eCheckin - Gerenciar Empresas cadastradas</title>
+    <title>eCheckin - Gerenciar Usuários</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -68,10 +55,20 @@ function status($status){
         .user-box {
             border-radius: 5px;
         }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            line-height: 20px;
+        }
     </style>
 </head>
 
-<body>
+<body onload="aviso()">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="#">eCheckin</a>
@@ -91,7 +88,7 @@ function status($status){
                     <a class="nav-link" href="gerenciamentoEmpresas.php">Gerenciar<br>empresas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Gerenciar<br>Locais cadastrados</a>
+                    <a class="nav-link" href="#" onclick="aviso()">Gerenciar<br>Locais cadastrados</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Relatórios<br>disponíveis</a>
@@ -116,14 +113,13 @@ function status($status){
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Gerenciar Empresas</h5>
+                        <h5 class="card-title">DEBUB do sistema</h5>
 
-                        <!-- Formulário de busca -->
                         <form class="form-inline mb-3 w-100">
                             <div class="form-group mr-2 flex-grow-1">
-                                <input type="text" class="form-control w-100" placeholder="Buscar por razão social">
+                                <input type="text" class="form-control w-100" placeholder="Buscar por LOG de erro">
                             </div>
-                            <button type="submit" class="btn btn-primary">Buscar empresa</button>
+                            <button type="submit" class="btn btn-primary">Buscar</button>
                         </form>
 
                         <!-- Tabela de usuários -->
@@ -131,26 +127,34 @@ function status($status){
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Razão social</th>
-                                        <th>CNPJ</th>
-                                        <th>Status</th>
-                                        <th>Qtde. locais ativos</th>
-                                        <th>Ações</th>                                      
+                                        <th>ID ERRO</th>
+                                        <th>DESCRIÇÃO ERRO</th>
+                                        <th>LOCAL</th>
+                                        <th>DATA</th>
+                                        <th>USUARIO</th>
+                                        <!-- Adicione mais colunas conforme necessário -->
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($listaDeEmpresa as $empresa){?>
-                                    <tr>
-                                        <td><a href="#"><?php echo $empresa->getRazaoSocial() ?></a></td>
-                                        <td><?php echo $empresa->getCnpj() ?></td>
-                                        <td><?php echo status($empresa->getStatusEmpresa()) ?></td>
-                                        <td><?php echo $empresa->getQtdLocais() ?></td>
-                                        <td>
-                                            <button class="btn btn-primary">Relatório</button>
-                                            <button class="btn btn-danger">Inativar</button>
-                                        </td>
-                                    <tr>
-                                    <?php }?>
+                                    <?php foreach ($listaDeErro as $erro) { ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $erro->getIdErro() ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $erro->getErro() ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $erro->getLocal() ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $erro->getData() ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $erro->getUsuario() ?>
+                                            </td>
+                                        <tr>
+                                        <?php } ?>
                                 </tbody>
                             </table>
                         </div>
@@ -160,7 +164,14 @@ function status($status){
         </div>
 
     </div>
-
+    <footer>
+        by PRODEV - Desenvolvimento de sistemas.
+    </footer>
+    <script>
+        function aviso(){
+            alert("Essa área é destina apenas ao desenvolvedor e ao administadores do sistema.");
+        }
+    </script>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

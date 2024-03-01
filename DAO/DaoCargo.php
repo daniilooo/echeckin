@@ -21,7 +21,7 @@ class DaoCargo{
         $nivelAcesso = $cargo->nivelDeAcesso;
 
         try{
-            $stmt = $this->conexao->prepare("INSERT INTO {$this->TBL_CARGOS} (DESCRICAO_CARGO, STATUS_CARGO, NIVEL_ACESSO) VALUES (?,?,?)");
+            $stmt = $this->conexao->prepare("INSERT INTO {$this->TBL_CARGOS} (DESCRICAO_CARGO, STATUS_CARGO, FK_NIVEL_ACESSO) VALUES (?,?,?)");
             $stmt->bind_param("sii", $descricaoCargo, $statusCargo, $nivelAcesso);
 
             if($stmt->execute()){
@@ -42,7 +42,7 @@ class DaoCargo{
 
     function selecionarCargo($idCargo){
         try{
-            $stmt = $this->conexao->prepare("SELECT DESCRICAO_CARGO, STATUS_CARGO, NIVEL_ACESSO FROM {$this->TBL_CARGOS} WHERE ID_CARGO = ?");
+            $stmt = $this->conexao->prepare("SELECT DESCRICAO_CARGO, STATUS_CARGO, FK_NIVEL_ACESSO FROM {$this->TBL_CARGOS} WHERE ID_CARGO = ?");
             $stmt->bind_param("i", $idCargo);
 
             $stmt->execute();
@@ -50,10 +50,11 @@ class DaoCargo{
             $row = $result->fetch_assoc();
 
             if($row != null){
-                return new Cargo($idCargo, $row['DESCRICAO_CARGO'], $row['STATUS_CARGO'], $row['NIVEL_ACESSO']);                
+                return new Cargo($idCargo, $row['DESCRICAO_CARGO'], $row['STATUS_CARGO'], $row['FK_NIVEL_ACESSO']);                
             } else {
                 return null;
-            }            
+            }
+                        
         } catch (Exception $e){
             $dataHoraFormatada = new DateTime();
             $erro = new Erro(0,$e->getMessage(), "DaoCargo.selecionarCargo", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
@@ -67,7 +68,7 @@ class DaoCargo{
     function gerarListaCargo(){
         $listaDeCargos = [];
         try{
-            $stmt = $this->conexao->prepare("SELECT ID_CARGO, DESCRICAO_CARGO, STATUS_CARGO, NIVEL_ACESSO FROM {$this->TBL_CARGOS}");
+            $stmt = $this->conexao->prepare("SELECT ID_CARGO, DESCRICAO_CARGO, STATUS_CARGO, FK_NIVEL_ACESSO FROM {$this->TBL_CARGOS}");
             $stmt->execute();
             $result = $stmt->get_result();
             

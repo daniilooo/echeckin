@@ -14,13 +14,10 @@ class DaoErro
     }
 
     function inserirErro(Erro $erroObj)
-    {
-        $idErro = 0;
+    {        
         $descricaoErro = $erroObj->getErro();
         $local = $erroObj->getLocal();
-
-        // Formatando o objeto DateTime como uma string
-        $data = $erroObj->getData()->format('Y-m-d H:i:s');
+        $data = $erroObj->getData(); 
 
         $usuario = $erroObj->getUsuario();
 
@@ -35,26 +32,21 @@ class DaoErro
     }
 
 
-    function gerarListaDeErros()
+
+    function gerarListaErros()
     {
-        $erros = [];
-        $idErro = null;
-        $descErro = null;
-        $localErro = null;
-        $dataHora = null;
-        $usuario = null;
+        $listaErros = [];
 
-        $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_ERRO} order by ID_ERRO DESC");
+        $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_ERRO} ORDER By ID_ERRO desc");
         $stmt->execute();
-        $stmt->bind_result($idErro, $descErro, $localErro, $dataHora, $usuario);
 
-        while ($stmt->fetch()) {
-            $erro = new Erro($idErro, $descErro, $localErro, $dataHora, $usuario);
-            $erros[] = $erro;
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $erro = new Erro($row['ID_ERRO'], $row['DESC_ERRO'], $row['LOCAL'], $row['DATA'], $row['FK_USUARIO']);
+            $listaErros[] = $erro;
         }
 
-        $stmt->close();
-        return $erros;
+        return $listaErros;
     }
 }
 
