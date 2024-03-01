@@ -66,8 +66,7 @@ class DaoLocal{
         }
     }
 
-    function gerarListaDeLocaisPorEmpresa(Empresa $empresa){
-        $idEmpresa = $empresa->getIdEmpresa();
+    function gerarListaDeLocaisPorEmpresa($idEmpresa){        
         $listaDeLocais = [];
 
         try{
@@ -84,6 +83,30 @@ class DaoLocal{
 
             return $listaDeLocais;
 
+        } catch (Exception $e){
+            $dataHoraFormatada = new DateTime();
+            $erro = new Erro(0,$e->getMessage(), "DaoLocal.gerarListaDeLocaisPorEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $conexaoTblErro = new Conexao();
+            $daoErro = new DaoErro($conexaoTblErro->conectar());            
+            $daoErro->inserirErro($erro);
+            return -2;    
+        }
+    }
+
+    function gerarListaDeLocais(){
+        $listaDeLocais = [];
+        try{
+            $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_LOCAIS}");
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_assoc()){
+                $local = new Local($row['ID_LOCAL'], $row['FK_EMPRESA'], $row['FK_TIPO_LOCAL'], $row['DESC_LOCAL'], $row['STATUS_LOCAL']);
+                $listaDeLocais[] = $local;
+            }
+
+            return $listaDeLocais;
+            
         } catch (Exception $e){
             $dataHoraFormatada = new DateTime();
             $erro = new Erro(0,$e->getMessage(), "DaoLocal.gerarListaDeLocaisPorEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
