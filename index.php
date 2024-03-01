@@ -42,11 +42,11 @@
                         <form action="controllers/login.php" method="POST">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i> </span>
-                                <input type="text" class="form-control" name="login" placeholder="Usuario" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+                                <input type="text" class="form-control" name="login" placeholder="Usuario" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off" required>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i> </span> 
-                                <input type="password" class="form-control" name="senha" placeholder="Senha" aria-label="Password" aria-describedby="basic-addon1">
+                                <input type="password" class="form-control" name="senha" placeholder="Senha" aria-label="Password" aria-describedby="basic-addon1" required>
                             </div>
                             <div class="col-md-12 controls">                                
                                 <button type="submit" class="btn btn-success form-control">Login</button>

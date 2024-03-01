@@ -20,9 +20,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION['login'] = true;
         header('Location: ../public/index2.php');
         exit;
-        
+
     } else {
-        header('Location: ../index.php');
+        header('Location: ../index.php?isLogin=0');
         exit;
     }
 

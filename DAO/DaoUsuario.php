@@ -97,6 +97,27 @@ class DaoUsuario
         }
     }
 
+    function contagemDeUsuarios(){
+        try{
+            $stmt = $this->conexao->prepare("SELECT COUNT(*) AS QUANTIDADE_USUARIOS FROM {$this->TBL_USUARIO}");
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+
+            if($row != null){
+                return $row['QUANTIDADE_USUARIOS'];
+            } 
+        } catch (Exception $e) {
+            $dataHoraFormatada = new DateTime();
+            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.contagemDeUsuarios", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $conexaoTblErro = new Conexao();
+            $daoErro = new DaoErro($conexaoTblErro->conectar());
+            $daoErro->inserirErro($erro);
+            return -2;
+        }
+    }
+
     function atualizarUsuario(Usuario $usuario)
     {
         $idUsuario = $usuario->getIdUsuario();

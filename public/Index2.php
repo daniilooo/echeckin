@@ -1,6 +1,7 @@
 <?php
 
 include_once(__DIR__ . '/../DAO/DaoUsuario.php');
+include_once(__DIR__ . '/../DAO/DaoLog.php');
 
 session_start();
 $sessionStatus = session_status();
@@ -10,7 +11,8 @@ if (!isset($_SESSION['login'])) {
 }
 
 if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
-    $daoUsuario = new DaoUsuario((new Conexao())->conectar(), $_SESSION['idUsuario']);
+    $conexao = new Conexao();
+    $daoUsuario = new DaoUsuario($conexao->conectar(), $_SESSION['idUsuario']);
     $usuario = $daoUsuario->selecionarUsuario($_SESSION['idUsuario']);
 
     $_SESSION['nomeUsuario'] = $usuario->getNome();
@@ -20,6 +22,11 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $_SESSION['loginUsuario'] = $usuario->getLogin();
     $_SESSION['statusUsuario'] = $usuario->getStatusUsuario();
 
+    $contagemColab = $daoUsuario->contagemDeUsuarios();
+    
+    $ultimoLog = (new DaoLog($conexao->conectar(), $_SESSION['idUsuario']))->recuperarUltimoLog();
+    
+
     ?>
 
     <!DOCTYPE html>
@@ -27,171 +34,163 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sistema de Ronda e Checkin</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>eCheckin - by Guibor Log</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
         <style>
             body {
-                background-color: #f8f9fa;
+                background-color: #f0f0f0;
             }
 
-            #sidebar {
+            .navbar {
                 background-color: #007bff;
-                color: #fff;
             }
 
-            #content {
-                margin-top: 20px;
+            .navbar-dark .navbar-nav .nav-link {
+                color: white;
             }
 
-            a {
-                color: #FFFFFF;
+            .container-fluid {
+                padding-top: 20px;
+            }
+
+            .card {
+                margin-bottom: 20px;
+            }
+
+            .user-box {
+                border-radius: 5px
             }
         </style>
     </head>
 
     <body>
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#">eCheckin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gerenciamentoUsuarios.php">Gerenciar<br>usuários</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gerenciar<br>empresas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gerenciar<br>Locais cadastrados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Relatórios<br>disponíveis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Manual do<br>sistema</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link user-box" style="background-color: #B0C4DE;"><?php echo $usuario->getNome ()?><br>Gerenciar conta</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Content -->
         <div class="container-fluid">
             <div class="row">
-                <!-- Menu Lateral -->
-                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
-                    <div class="sidebar-sticky">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">
-                                    Empresas
-                                </a>
-                                <ul class="nav flex-column ml-3">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Cadastrar empresas</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Gerenciar empresas</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Locais
-                                </a>
-                                <!-- Subitens para o Menu 2 -->
-                                <ul class="nav flex-column ml-3">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Cadastrar locais</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">gerenciar locais</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Usuarios
-                                </a>
-                                <!-- Subitens para o Menu 2 -->
-                                <ul class="nav flex-column ml-3">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Submenu 2.1</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Submenu 2.2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Configurações
-                                </a>
-                                <!-- Subitens para o Menu 2 -->
-                                <ul class="nav flex-column ml-3">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Submenu 2.1</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Submenu 2.2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Usuários</h5>
+                            <p class="card-text">Hoje existem <?php echo $contagemColab?> usuários cadastrados na base.</p>
+                            <a href="gerenciamentoUsuarios.php" class="btn btn-primary">Gerenciar usuários</a>
+                            <a href="#" class="btn btn-primary">Cadastrar novo usuário</a>
+                        </div>
                     </div>
-                </nav>
-
-                <!-- Conteúdo -->
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" id="content">
-                    <div
-                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Cabeçalho</h1>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Empresas</h5>
+                            <p class="card-text">Explore your photo library.</p>
+                            <a href="#" class="btn btn-primary">Gerenciar empresa</a>
+                            <a href="#" class="btn btn-primary">Cadastrar nova empresa</a>
+                        </div>
                     </div>
-
-                    <!-- Conteúdo da Página -->
-                    <div class="container">
-                        <div class="content" id="dynamic-content"></div>
-                        <!-- Seu Conteúdo Aqui -->
-                        <h2>Bem-vindo ao Sistema de Ronda e Checkin</h2>
-
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Locais</h5>
+                            <p class="card-text">Check your emails on iCloud.</p>
+                            <a href="#" class="btn btn-primary">Gerenciar locais cadastrados</a>
+                            <a href="#" class="btn btn-primary">Gerar placas de checkpoint</a>
+                        </div>
                     </div>
-                </main>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Log de Atividas</h5>
+                            <p class="card-text"><?php echo $ultimoLog->getRegLog()?><br><?php echo $ultimoLog->getDataHora()?></p>
+                            
+                            <a href="#" class="btn btn-primary">Verificar log completo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Relatórios</h5>
+                            <p class="card-text">Check your emails on iCloud.</p>
+                            <a href="#" class="btn btn-primary">Relátórios disponíveis</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Configurações</h5>
+                            <p class="card-text">Condigurações de funcionamento do sistema.</p>
+                            <a href="#" class="btn btn-danger">Configurações do sistema</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">DEBUG</h5>
+                            <p class="card-text">Ferramenta direciona apenas para o desenvolvedor.</p>
+                            <a href="#" class="btn btn-danger">DEBUG</a>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Reparo e alteração</h5>
+                            <p class="card-text">Canal de solicitação de alteração e reparo no siste</p>
+                            <a href="#" class="btn btn-danger">Enviar solicitação</a>                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- Bootstrap JS and dependencies -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <script>
-            // Função para carregar conteúdo na div #dynamic-content
-            function loadContent(page) {
-                // Aqui você pode adicionar lógica para mapear os links do menu para as páginas correspondentes
-                var contentUrl = '';
-
-                switch (page) {
-                    case 'cadastrar-empresas':
-                        contentUrl = 'cadastroDeEmpresa.php';
-                        break;
-                    case 'gerenciar-empresas':
-                        contentUrl = 'gerenciarEmpresas.php';
-                        break;
-                    case 'cadastrar-locais':
-                        contentUrl = 'cadastrarLocais.php';
-                        break;
-                    case 'gerenciar-locais':
-                        contentUrl = 'gerenciarLocais.php';
-                        break;
-                    case 'submenu-2-1':
-                        contentUrl = 'submenu21.php';
-                        break;
-                    case 'submenu-2-2':
-                        contentUrl = 'submenu22.php';
-                        break;
-                    default:
-                        contentUrl = 'bemVindo.php';
-                        break;
-                }
-
-                // Carrega o conteúdo usando jQuery
-                $.get(contentUrl, function (data) {
-                    $('#dynamic-content').html(data);
-                });
-            }
-
-            // Evento de clique nos links do menu
-            $(document).ready(function () {
-                $('.nav-link').on('click', function (e) {
-                    e.preventDefault();
-                    var page = $(this).text().toLowerCase().replace(/\s+/g, '-');
-                    loadContent(page);
-                });
-
-                // Carrega o conteúdo inicial
-                loadContent('bem-vindo');
-            });
-        </script>
-
-
     </body>
 
     </html>
+
     <?php
 } else {
     echo "<script>alert('Para utilizar o sistema eCheckin é necessário fazer login.');

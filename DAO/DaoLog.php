@@ -68,6 +68,31 @@ class DaoLog{
             return -2;
         }
     }
+
+    function recuperarUltimoLog(){
+        try{
+            $stmt = $this->conexao->prepare("SELECT ID_LOG, REGLOG, DATAHORA, ID_USUARIO FROM {$this->TBL_LOG} ORDER BY ID_LOG DESC LIMIT 1");
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            
+            $row = $result->fetch_assoc();
+
+            if($row != null){
+                return new Log($row['ID_LOG'], $row['REGLOG'], (new DateTime($row['DATAHORA']))->format('d/m/Y H:i:s'), $row['ID_USUARIO']);
+            } else {
+                return null;
+            }
+
+        } catch (Exception $e){
+            $dataHoraFormatada = new DateTime();
+            $erro = new Erro(0, $e->getMessage(), "DaoLog.recuperarUltimoLog", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $conexaoTblErro = new Conexao();
+            $daoErro = new DaoErro($conexaoTblErro->conectar());
+            $daoErro->inserirErro($erro);
+            return -2;
+        }
+    }
     
 
 }
