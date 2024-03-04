@@ -121,7 +121,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                             </div>
                             <button type="submit" class="btn btn-primary">Buscar</button>
                         </form>
-
+                        <div class="lead">
+                            <p class="lead">Essa página mostra apenas os últimos 10 registros na tabela DEBUG do sistema.</br>Para verificar os logs anteriores, consulte diretamente o banco de dados.</p>
+                        </div>
                         <!-- Tabela de usuários -->
                         <div class="mx-auto"> <!-- Adicionado para centralizar horizontalmente -->
                             <table class="table">
@@ -168,7 +170,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         by PRODEV - Desenvolvimento de sistemas.
     </footer>
     <script>
-        function aviso(){
+        function aviso() {
             alert("Essa área é destina apenas ao desenvolvedor e ao administadores do sistema.");
         }
     </script>

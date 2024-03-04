@@ -32,6 +32,20 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $listaDeEmpresas = (new DaoEmpresa($conexao->conectar(), $_SESSION['idUsuario']))->gerarListaEmpresas();
     $listaDeUsuarios = $daoUsuario->gerarListaUsuarios();
 
+    if(isset($_GET['addSucces'])){
+
+        switch($_GET['addSucces']){
+            case 0:
+                echo "<script>alert('Falha ao cadastra usuário, contate do administrador do sistema')</script>";
+                break; 
+            case 1:
+                echo "<script>alert('Usuário cadastrado com sucesso')</script>";
+                break;
+            default:
+                echo "<script>alert('Status desconhecido, contate o administrador do sistema')</script>";        
+        }
+    }   
+
        
     function empresa($daoEmpresa, $idEmpresa){
         $empresa = $daoEmpresa->selecionarEmpresa($idEmpresa);
@@ -185,7 +199,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                     <tbody>
                                         <?php foreach($listaDeUsuarios as $usuario){?>
                                         <tr>
-                                            <th><a href="#"><?php echo $usuario->getMatricula() ?></a></th>
+                                            <th><a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>"><?php echo $usuario->getMatricula() ?></a></th>
                                             <th><?php echo $usuario->getNome() ?></th>
                                             <th><?php echo empresa($daoEmpresa, $usuario->getEmpresa()) ?></th>
                                             <th><?php echo cargo($daoCargo, $usuario->getCargo()) ?></th>

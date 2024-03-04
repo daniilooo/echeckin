@@ -37,7 +37,7 @@ class DaoErro
     {
         $listaErros = [];
 
-        $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_ERRO} ORDER By ID_ERRO desc");
+        $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_ERRO} ORDER By ID_ERRO desc LIMIT 10");
         $stmt->execute();
 
         $result = $stmt->get_result();

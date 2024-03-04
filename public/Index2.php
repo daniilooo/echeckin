@@ -126,7 +126,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                 <?php echo $contagemColab ?> usuários cadastrados na base.
                             </p>
                             <a href="gerenciamentoUsuarios.php" class="btn btn-primary">Gerenciar usuários</a>
-                            <a href="#" class="btn btn-primary">Cadastrar novo usuário</a>
+                            <a href="cadastroDeUsuario.php" class="btn btn-primary">Cadastrar novo usuário</a>
                             <a href="#" class="btn btn-primary">Gerenciar cargos</a>
                         </div>
                     </div>
