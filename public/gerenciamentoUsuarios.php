@@ -195,7 +195,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                     <div class="form-group mr-2 flex-grow-1">
                                         
                                         <select class="form-control w-100 mb-3">                                            
-                                            <option value="0">Selecione a empresa para consulta do usuarios</option>
+                                            <option value="0" selected disabled>Selecione a empresa para consulta do usuarios</option>
                                             <?php foreach($listaDeEmpresas as $empresa){?>
                                             <option value="<?php echo $empresa->getIdEmpresa()?>"><?php echo $empresa->getRazaoSocial() ?></option>
                                             <?php }?>

@@ -142,6 +142,43 @@ class DaoLocal{
             return null;    
         }
     }
+
+    function selecionarTipoLocal($idTipoLocal){
+        try{
+            $stmt = $this->conexao->prepare("SELECT DESCRICAO_TIPOLOCAL FROM {$this->TBL_TIPOS_LOCAIS} WHERE ID_TIPO_LOCAL = ?");
+            $stmt->bind_param("i", $idTipoLocal);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $row = $result->fetch_assoc();
+
+            if($row != null){
+                return $row['DESCRICAO_TIPOLOCAL'];
+            } else {
+                return "";
+            }
+        } catch (Exception $e){
+            $dataHoraFormatada = new DateTime();
+            $erro = new Erro(0,$e->getMessage(), "DaoLocal.selecionarTipoLocal", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $conexaoTblErro = new Conexao();
+            $daoErro = new DaoErro($conexaoTblErro->conectar());            
+            $daoErro->inserirErro($erro);
+            return null;    
+        }
+    }
+
+    function alterarLocal(Local $local){
+        $idLocal = $local->getIdLocal();
+        $empresa = $local->getFkEmpresa();
+        $tipo = $local->getFkTipoLocal();
+        $descricao = $local->getDescLocal();
+        $status = $local->getStatusLocal();
+
+        try{
+            $stmt = $this->conexao->prepare("UPDATE ")
+        }
+    }
 }
 
 ?>

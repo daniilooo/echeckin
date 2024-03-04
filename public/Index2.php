@@ -145,8 +145,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Locais</h5>
-                            <p class="card-text">Check your emails on iCloud.</p>
+                            <p class="card-text">Inclusão e gerenciamento de locais cadastrados por empresa.</p>
                             <a href="gerenciarLocais.php" class="btn btn-primary">Gerenciar locais</a>
+                            <a href="cadastroDeLocais.php" class="btn btn-primary">Cadastrar locais</a>
                             <a href="#" class="btn btn-primary">Gerar placas de checkpoint</a>
                         </div>
                     </div>
