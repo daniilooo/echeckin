@@ -152,22 +152,24 @@ class DaoUsuario
         $idUsuario = $usuario->getIdUsuario();
         $nome = $usuario->getNome();
         $matricula = $usuario->getMatricula();
+        $empresa = $usuario->getEmpresa();
+        $cargo = $usuario->getCargo();
         $login = $usuario->getLogin();
-        $senha = $usuario->getSenha();
         $status = $usuario->getStatusUsuario();
 
-        try {
-            $stmt = $this->conexao->prepare("UPDATE {$this->TBL_USUARIO} SET NOME = ?, LOGIN = ?, SENHA = ?, STATUS_USUARIO = ? WHERE ID_USUARIO = ?");
-            $stmt->bind_param("sssii", $nome, $login, $senha, $status, $idUsuario);
+        try{
+            $stmt = $this->conexao->prepare("UPDATE {$this->TBL_USUARIO} SET NOME = ?, MATRICULA = ?, EMPRESA = ?, CARGO = ?, LOGIN = ?, STATUS_USUARIO = ? WHERE ID_USUARIO = ?");
+            $stmt->bind_param("ssiisii", $nome, $matricula, $empresa, $cargo, $login, $status, $idUsuario);
 
-            if ($stmt->execute()) {
+            if($stmt->execute()){
                 return $stmt->affected_rows;
             } else {
                 return -1;
             }
+
         } catch (Exception $e) {
             $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.atualizarUsuario", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.contagemDeUsuarios", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
             $conexaoTblErro = new Conexao();
             $daoErro = new DaoErro($conexaoTblErro->conectar());
             $daoErro->inserirErro($erro);
@@ -192,6 +194,26 @@ class DaoUsuario
         } catch (Exception $e) {
             $dataHoraFormatada = new DateTime();
             $erro = new Erro(0, $e->getMessage(), "DaoUsuario.alterarStatus", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $conexaoTblErro = new Conexao();
+            $daoErro = new DaoErro($conexaoTblErro->conectar());
+            $daoErro->inserirErro($erro);
+            return -2;
+        }
+    }
+
+    function resetarSenha($idUsuario){
+        try{
+            $stmt = $this->conexao->prepare("UPDATE {$this->TBL_USUARIO} SET SENHA = ? WHERE ID_USUARIO = ?");
+            $stmt->bind_param("si", password_hash("123456", PASSWORD_DEFAULT), $idUsuario);
+
+            if($stmt->execute()){
+                return $stmt->affected_rows;
+            } else {
+                return -1;
+            }
+        } catch (Exception $e) {
+            $dataHoraFormatada = new DateTime();
+            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.resetarSenha", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
             $conexaoTblErro = new Conexao();
             $daoErro = new DaoErro($conexaoTblErro->conectar());
             $daoErro->inserirErro($erro);

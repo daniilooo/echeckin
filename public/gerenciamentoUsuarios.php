@@ -44,7 +44,33 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             default:
                 echo "<script>alert('Status desconhecido, contate o administrador do sistema')</script>";        
         }
-    }   
+    }
+    
+    if(isset($_GET['altSucces'])){
+        switch($_GET['altSucces']){
+            case 0:
+                echo "<scrip>alert('Falha na atualização do cadastro do usuário')</script>";
+                break;
+            case 1:
+                echo "<script>alert('Cadastro alterado com sucesso')</script>";
+                break;
+            default:
+                echo "<script>alert('Status desconhecido, contate o administrador do sistema')</script>";
+        }
+    }
+
+    if(isset($_GET['resSucces'])){
+        switch($_GET['resSucces']){
+            case 0:
+                echo "<script>alert('Não foi posspivel resetar a senha do usuário, contate o administrador do sistema')</script>";
+                break;
+            case 1:
+                echo "<script>alert('Senha redefinida com sucesso, será solicitado que o usuário altere a senha na próxima vez que ele logar no sistema.')</script>";
+                break;
+            default:
+                echo "<script>alert('Status desconhecido, contate o administrado do sistema.')</script>";
+        }
+    }
 
        
     function empresa($daoEmpresa, $idEmpresa){
@@ -197,7 +223,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach($listaDeUsuarios as $usuario){?>
+                                        <?php foreach($listaDeUsuarios as $usuario){
+                                            if($usuario->getStatusUsuario() == 1){?>
                                         <tr>
                                             <th><a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>"><?php echo $usuario->getMatricula() ?></a></th>
                                             <th><?php echo $usuario->getNome() ?></th>
@@ -206,11 +233,12 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                             <th><?php echo status($usuario->getStatusUsuario() )?></th>
                                             <th>
                                                 <button class="btn btn-primary mb-2">Alterar status</button>
-                                                <button class="btn btn-secondary mb-2">Resetar senha</button>
+                                                <button class="btn btn-secondary mb-2" onclick="resetarSenha(<?php echo $usuario->getIdUsuario()?>)">Resetar senha</button>
                                                 <button class="btn btn-danger mb-2">Bloquear acesso</button>
                                             </th>
                                         <tr>
-                                        <?php }?>
+                                        <?php }
+                                    }?>
                                     </tbody>
                                 </table>
                             </div>
@@ -225,6 +253,11 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            function resetarSenha(idUsuario){
+                window.location.href= "../controllers/resetarSenhaUsuario.php?idUsuario="+idUsuario;
+            }
+        </script>
     </body>
 
     </html>

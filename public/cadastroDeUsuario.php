@@ -132,7 +132,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <h5 class="card-title">Formulário de Cadastro de usuários</h5>
 
                         <!-- Formulário de cadastro -->
-                        <form method="POST" action=<?php echo verificarAction() ? "../controllers/cadastrarUsuario.php" : "../controllers/alterarUsuario.php"?> onsubmit="return validarSenha()">
+                        <form method="POST" action=<?php echo !verificarAction() ? "../controllers/cadastrarUsuario.php" : "../controllers/alterarUsuario.php"?> onsubmit="return validarSenha()">
                             <div class="form-group">
                                 <label for="nome">Nome:</label>
                                 <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome do colaborador" autocomplete="off" required value="<?php echo verificarAction() ? $usuarioAlt->getNome() : null ?>">
@@ -142,7 +142,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                 <select name="empresa" id="empresa" class="form-control">
                                     <option value="--" selected disabled>Selecione a empresa</option>                               
                                         <?php foreach($listaDeEmpresas as $empresa){?>
-                                            <option value="<?php echo $empresa->getIdEmpresa()?>" <?php echo $empresa->getIdEmpresa() == $usuarioAlt->getEmpresa() ? "selected" : ""?>><?php echo $empresa->getRazaoSocial()?></option>
+                                            <option value="<?php echo $empresa->getIdEmpresa()?>" <?php echo verificarAction() ? $empresa->getIdEmpresa() == $usuarioAlt->getEmpresa() ? "selected" : "" : ""?>><?php echo $empresa->getRazaoSocial()?></option>
                                         <?php }?>                                    
                                 </select>
                             </div>
@@ -151,7 +151,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                 <select name="cargo" id="cargo" class="form-control">
                                     <option value="--" selected disabled>Selecione o cargo</option>
                                     <?php foreach($listaDeCargos as $cargo){?>
-                                        <option value="<?php echo $cargo->idCargo?>" <?php echo $cargo->idCargo == $usuarioAlt->getCargo() ? "selected" : ""?>><?php echo $cargo->descricaoCargo?></option>
+                                        <option value="<?php echo $cargo->idCargo?>" <?php echo  verificarAction() ? $cargo->idCargo == $usuarioAlt->getCargo() ? "selected" : "" : "" ?>><?php echo $cargo->descricaoCargo?></option>
                                     <?php }?>
                                 </select>
                             </div>
@@ -174,7 +174,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                             </div>
                             <?php } else {?>
                                 <div class="form-group">
-                                    <a class="btn btn-danger" href="">Resetar a senha do usuário</a>
+                                    <a class="btn btn-danger" <?php echo verificarAction() ? "onClick = resetarSenha(".$usuarioAlt->getIdUsuario().")" : null?>>Resetar a senha do usuário</a>
                                 </div>
                             <?php }?>
                             <div class="form-check">
@@ -185,6 +185,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                 <input type="radio" class="form-check-input" id="inativo" name="status" value="0" <?php echo verificarAction() ? $usuarioAlt->getStatusUsuario() == 0 ? "checked" : "" : ""?>>
                                 <label for="inativo">Inativo</label>
                             </div>
+                            <?php if(verificarAction()){?>
+                                <input type="hidden" id="idUsuarioAlt" name="idUsuarioAlt" value="<?php echo $usuarioAlt->getIdUsuario()?>">
+                            <?php }?>                            
                             <button type="submit" class="btn <?php echo verificarAction() ? "btn-warning" : "btn-primary"?>"><?php echo verificarAction() ? "Alterar cadastro" : "Cadastrar usuário"?></button>
                         </form>
                     </div>
@@ -211,7 +214,10 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             } else {
                 return true;
             }
+        }
 
+        function resetarSenha(idUsuario){
+            window.location.href = "../controllers/resetarSenhaUsuario.php?idUsuario="+idUsuario
         }
 
     </script>
