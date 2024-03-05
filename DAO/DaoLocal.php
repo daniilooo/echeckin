@@ -160,7 +160,7 @@ class DaoLocal{
             }
         } catch (Exception $e){
             $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoLocal.selecionarTipoLocal", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $erro = new Erro(null ,$e->getMessage(), "DaoLocal.selecionarTipoLocal", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
             $conexaoTblErro = new Conexao();
             $daoErro = new DaoErro($conexaoTblErro->conectar());            
             $daoErro->inserirErro($erro);
@@ -176,7 +176,20 @@ class DaoLocal{
         $status = $local->getStatusLocal();
 
         try{
-            $stmt = $this->conexao->prepare("UPDATE ")
+            $stmt = $this->conexao->prepare("UPDATE {this->TBL_LOCAIS} SET FK_EMPRESA = ?, FK_TIPO_LOCAL = ?, DESC_LOCAL = ?, STATUS_LOCAL = ? WHERE ID_LOCAL = ?");
+            $stmt->bind_param("iisii", $empresa, $tipo, $descricao, $status, $idLocal);
+
+            if($stmt->execute()){
+                return $stmt->affected_rows;
+            } else {
+                return -2;
+            }
+        } catch (Exception $e){
+            $erro = new Erro(null, $e->getMessage(), "DaoLocal.alterarLocal", (new DateTime())->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
+            $conexaoTblErro = new Conexao();
+            $daoErro = new DaoErro($conexaoTblErro->conectar());
+            $daoErro->inserirErro($erro);
+            return -2;
         }
     }
 }
