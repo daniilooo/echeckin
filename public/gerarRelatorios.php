@@ -80,7 +80,7 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index2.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="gerenciamentoUsuarios.php">Gerenciar<br>usuários</a>
@@ -98,8 +98,7 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
                     </li>
                     <li class="nav-item">
-                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario() ?>"
-                            class="nav-link user-box" style="background-color: #B0C4DE; border-radius: 5px;">
+                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
                         </a>
                     </li>

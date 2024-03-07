@@ -100,40 +100,39 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="index2.php">eCheckin</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index2.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="gerenciamentoUsuarios.php">Gerenciar<br>usuários</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="gerenciamentoEmpresas.php">Gerenciar<br>empresas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="gerenciarLocais.php">Gerenciar<br>Locais cadastrados</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="gerarRelatorios.php">Relatórios<br>disponíveis</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
-                </li>
-                <li class="nav-item">
-                    <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario() ?>"
-                        class="nav-link user-box" style="background-color: #B0C4DE; border-radius: 5px;">
-                        <?php echo $usuario->getNome() ?><br>Gerenciar conta
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+            <a class="navbar-brand" href="index2.php">eCheckin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index2.php">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gerenciamentoUsuarios.php">Gerenciar<br>usuários</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gerenciamentoEmpresas.php">Gerenciar<br>empresas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gerenciarLocais.php">Gerenciar<br>Locais cadastrados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gerarRelatorios.php">Relatórios<br>disponíveis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
+                            <?php echo $usuario->getNome() ?><br>Gerenciar conta
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
     <!-- Content -->
     <div class="container-fluid d-flex justify-content-center">
