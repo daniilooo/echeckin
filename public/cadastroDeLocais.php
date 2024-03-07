@@ -36,7 +36,6 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     }
 
 
-
 ?>
 
 <!DOCTYPE html>

@@ -169,8 +169,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Relatórios</h5>
-                            <p class="card-text">Check your emails on iCloud.</p>
-                            <a href="#" class="btn btn-primary">Relátórios disponíveis</a>
+                            <p class="card-text">Gerar relatórios de checkins.</p>
+                            <a href="gerarRelatorios.php" class="btn btn-primary">Relátórios disponíveis</a>
                         </div>
                     </div>
                 </div>

@@ -141,7 +141,7 @@ function status($status){
                                 <tbody>
                                     <?php foreach($listaDeEmpresa as $empresa){?>
                                     <tr>
-                                        <td><a href="#"><?php echo $empresa->getRazaoSocial() ?></a></td>
+                                        <td><a href="../public/cadastroDeEmpresa.php?idEmpresa=<?php echo $empresa->getIdEmpresa()?>"><?php echo $empresa->getRazaoSocial() ?></a></td>
                                         <td><?php echo $empresa->getCnpj() ?></td>
                                         <td><?php echo status($empresa->getStatusEmpresa()) ?></td>
                                         <td><?php echo $empresa->getQtdLocais() ?></td>

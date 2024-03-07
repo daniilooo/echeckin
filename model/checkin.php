@@ -30,7 +30,7 @@ class Checkin{
         if($dataHora instanceof DateTime){
             $this->dataHora = $dataHora;
         } else {
-            $dataHora = (new DateTime())->format('Y-m-d H:i:s');
+            $this->dataHora = (new DateTime($dataHora))->format('Y-m-d H:i:s');
         }
     }
     
