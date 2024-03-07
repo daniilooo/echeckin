@@ -60,7 +60,7 @@ class Erro
     function getData()
     {
         $dataHora = $this->data;
-        return $dataHora->format('d/m/Y H:i:s');
+        return $dataHora->format('Y-m-d H:m:s');
     }
 
     function getUsuario()

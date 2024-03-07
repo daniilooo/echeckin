@@ -179,7 +179,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <div class="card-body">
                             <h5 class="card-title">Configurações</h5>
                             <p class="card-text">Condigurações de funcionamento do sistema.</p>
-                            <a href="#" class="btn btn-danger">Configurações do sistema</a>
+                            <a href="configuracaoDoSistema.php" class="btn btn-danger">Configurações do sistema</a>
                         </div>
                     </div>
                 </div>
