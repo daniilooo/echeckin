@@ -89,7 +89,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index2.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="gerenciamentoUsuarios.php">Gerenciar<br>usuários</a>
@@ -127,7 +127,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                             </p>
                             <a href="gerenciamentoUsuarios.php" class="btn btn-primary">Gerenciar usuários</a>
                             <a href="cadastroDeUsuario.php" class="btn btn-primary">Cadastrar novo usuário</a>
-                            <a href="#" class="btn btn-primary">Gerenciar cargos</a>
+                            <a href="gerenciarCargos.php" class="btn btn-primary">Gerenciar cargos</a>
                         </div>
                     </div>
                 </div>
