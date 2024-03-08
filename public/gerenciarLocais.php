@@ -26,8 +26,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $qtdUsuarios = $daoUsuario->contarUsuarioPorEmpresa();
 
 
-    if(isset($_GET['addSucces'])){
-        switch($_GET['addSucces']){
+    if (isset($_GET['addSucces'])) {
+        switch ($_GET['addSucces']) {
             case 0:
                 echo "<script>alert('Falha na tentativa de inclusão de local, contate o administrador.')</script>";
                 break;
@@ -133,7 +133,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
                     </li>
                     <li class="nav-item">
-                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
+                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario() ?>"
+                            class="nav-link user-box" style="background-color: #B0C4DE;">
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
                         </a>
                     </li>
@@ -190,7 +191,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                                         <?php echo status($local->getStatusLocal()) ?>
                                                     </td>
                                                     <td>
-                                                        <button class="btn btn-primary">Gerar</button>
+                                                        <button class="btn btn-primary"
+                                                            onclick="gerarCheckPoint(<?php echo $local->getIdLocal() ?>)">Gerar</button>
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -207,6 +209,14 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                 <footer>
                     by PRODEV - Desenvolvimento de sistemas.
                 </footer>
+                <script>
+
+                    function gerarCheckPoint(idLocal) {
+                        window.location.href = "checkpoint.php?idLocal=" + idLocal;
+                    }
+
+
+                </script>
                 <!-- Bootstrap JS and dependencies -->
                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

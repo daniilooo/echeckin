@@ -36,7 +36,7 @@ class DaoNivelAcesso{
     }
 
     function gerarListaNiveisAcesso(){
-        $listaNiveisAcesso =[];
+        $listaNivelAcesso[] =[];
         try{
             $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_NIVEIS_ACESSO}");
             $stmt->execute();

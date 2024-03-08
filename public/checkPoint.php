@@ -1,3 +1,31 @@
+<?php
+include_once(__DIR__ . '/../DAO/DaoLog.php');
+include_once(__DIR__ . '/../DAO/DaoLocal.php');
+
+session_start();
+$sessionStatus = session_status();
+
+if (!isset($_SESSION['login'])) {
+    $_SESSION['login'] = false;
+}
+
+if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
+    
+
+    if (isset($_GET['idLocal'])) {
+        $idLocal = $_GET['idLocal'];
+
+        $daoLocal = new DaoLocal((new Conexao())->conectar(), 1);
+        $local = $daoLocal->selecionarLocal($idLocal);
+    }
+} else {
+    echo "<script>alert('Para utilizar o sistema eCheckin é necessário fazer login.');
+        window.location.href = '../index.php';    
+        </script>";
+    return;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -5,9 +33,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página para Impressão</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="js/qrcodejs/qrcode.min.js"></script>
     <style>
+
         .logotipo {
             height: 100px;
         }
@@ -15,22 +44,11 @@
         #qrcode-container {
             display: flex;
             justify-content: center;
-        }
+        }       
+       
     </style>
+
 </head>
-
-<?php
-include_once(__DIR__ . '/../DAO/DaoLog.php');
-include_once(__DIR__ . '/../DAO/DaoLocal.php');
-
-if (isset($_GET['idLocal'])) {
-    $idLocal = $_GET['idLocal'];
-
-    $daoLocal = new DaoLocal((new Conexao())->conectar(), 1);
-    $local = $daoLocal->selecionarLocal($idLocal);
-}
-
-?>
 
 <body class="bg-light" onload="generateQRCode(<?php echo $local->getIdLocal() ?>)">
     <div class="container my-5">
@@ -54,7 +72,7 @@ if (isset($_GET['idLocal'])) {
 
 
         <div class="row mt-3">
-            <div class="col-md-12 text-center">                
+            <div class="col-md-12 text-center">
                 <p>Ponto de verificação de ronda.<br>Para fazer a verificação é necessário estar logado no sistema.</p>
             </div>
         </div>
@@ -71,7 +89,17 @@ if (isset($_GET['idLocal'])) {
 
     <script type="text/javascript">
         function generateQRCode(idLocal) {
-            let urlLocal = "http://10.80.0.30/echeckin/controllers/checkin.php?idLocal="+idLocal;
+
+            const local = true;
+            var url = null;
+
+            if(local){
+                url = "localhost/echeckin/controllers/checkin.php?idLocal="
+            } else {
+                url = "http://10.80.0.30/echeckin/controllers/checkin.php?idLocal="
+            }
+
+            let urlLocal = url + idLocal;
 
             let qrcodeContainer2 = document.getElementById("qrcode");
             qrcodeContainer2.innerHTML = "";
@@ -82,7 +110,7 @@ if (isset($_GET['idLocal'])) {
                 colorDark: "#000000",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
-            });            
+            });
         }
 
     </script>
