@@ -35,9 +35,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     }       
 
 } else {
-    echo "<script>alert('Para utilizar o sistema eCheckin é necessário fazer login.');
-                
-        </script>";
+    echo "<script>alert('Para utilizar o sistema eCheckin é necessário fazer login.');</script>";
     exit;
 }
 
