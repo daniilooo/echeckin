@@ -160,9 +160,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                     <?php
                                     foreach ($qtdUsuarios as $quantidade) {
                                         if ($quantidade['empresa'] == $empresa->getIdEmpresa()) {
-                                            echo $quantidade['quantUser'];
-                                        } else {
-                                            echo "0";
+                                            echo $quantidade['quantUser'];                                            
                                         }
                                     }
                                     ?>
@@ -200,8 +198,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                     </table>
                                 <?php } else { ?>
                                     <p class="card-text">Não existem locais cadastrados para essa empresa</p>
-                                <?php } ?>
-                                <a href="#" class="btn btn-primary">View Documents</a>
+                                <?php } ?>                                
                             </div>
                         </div>
                     </div>
