@@ -1,3 +1,20 @@
+<?php
+
+session_start();
+$sessionStatus = session_status();
+
+if(!isset($_SESSION['login'])){
+    $_SESSION['login'] = false;
+}
+
+if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){    
+    header("Location: public/index2.php?Login=1");
+}
+    
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 

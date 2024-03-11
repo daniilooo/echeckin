@@ -26,6 +26,13 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
     $ultimoLog = (new DaoLog($conexao->conectar(), $_SESSION['idUsuario']))->recuperarUltimoLog();
 
+    if(isset($_GET['Login'])){
+        if($_GET['Login'] == 1){
+            $nomeUsuario = $_SESSION['nomeUsuario'];
+            echo "<script>alert('Você ja está logado como ".$nomeUsuario.".')</script>";
+        }
+    }
+
 
     ?>
 
