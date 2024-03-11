@@ -148,7 +148,7 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
                             <thead>
                                 <tr>
                                     <th>ID Checkin</th>
-                                    <th>FK Usuario</th>
+                                    <th>Usuário</th>
                                     <th>Data</th>
                                     <th>Hora</th>
                                 </tr>
