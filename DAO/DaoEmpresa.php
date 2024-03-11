@@ -13,6 +13,12 @@ class DaoEmpresa{
         $this->idUsuarioSessao = $idUsuarioSessao;
     }
 
+    private function inserirErro($erro, $localErro, $fkUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime())->format('Y-m-d H:i:s'), $fkUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);
+    }
+
     function inserirEmpresa(Empresa $empresa){
         $razaoSocial = $empresa->getRazaoSocial();    
         $cnpj = $empresa->getCnpj();      
@@ -30,11 +36,7 @@ class DaoEmpresa{
             }
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoEmpresa.inserirEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoEmpresa.inserirEmpresa", $this->idUsuarioSessao);
             return -2;    
         }
     }
@@ -53,18 +55,14 @@ class DaoEmpresa{
 
             $stmt->bind_result($razaoSocial, $cnpj, $statusEmpresa, $qtdLocais);
             
-            if($stmt->fetch()){
+            if($stmt->fetch()){                
                 return new Empresa($idEmpresa, $razaoSocial, $cnpj, $statusEmpresa, $qtdLocais);
             } else {
                 return null;
             }
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoEmpresa.selecionarEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoEmpresa.selecionarEmpresa", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -85,11 +83,7 @@ class DaoEmpresa{
             }
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoEmpresa.alterarStatusEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoEmpresa.alterarStatusEmpresa", $this->idUsuarioSessao);
             return -2;    
         }
     }
@@ -111,11 +105,7 @@ class DaoEmpresa{
             }
             
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoEmpresa.alterarStatusEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoEmpresa.alterarEmpresa", $this->idUsuarioSessao);
             return -2;    
         }
     }
@@ -137,11 +127,7 @@ class DaoEmpresa{
             return $listaEmpresas;
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoEmpresa.gerarListaEmpresas", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoEmpresa.gerarListaEmpresas", $this->idUsuarioSessao);
             return -2;    
         }
     }

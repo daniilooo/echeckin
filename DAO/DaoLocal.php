@@ -16,6 +16,12 @@ class DaoLocal{
         $this->idUsuarioSessao = $idUsuarioSessao;
     }
 
+    private function inserirErro($erro, $localErro, $fkUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime())->format('Y-m-d H:i:s'), $fkUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);
+    }
+
     function inserirLocal(Local $local){
         $fkEmpresa = $local->getFkEmpresa();
         $fkTipoLocal = $local->getFkTipoLocal();
@@ -32,11 +38,7 @@ class DaoLocal{
                 return -1;
             }
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoLocal.inserirLocal", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLocal.inserirLocal", $this->idUsuarioSessao);
             return -2;    
         }
     }
@@ -57,11 +59,7 @@ class DaoLocal{
                 return null;
             }
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoLocal.selecionarLocal", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLocal.selecionarLocal", $this->idUsuarioSessao);
             return -2;    
         }
     }
@@ -81,14 +79,12 @@ class DaoLocal{
                 $listaDeLocais[] = $local;
             }
 
-            return $listaDeLocais;
+            $result->close();
+
+            return $listaDeLocais;            
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoLocal.gerarListaDeLocaisPorEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLocal.gerarListaDeLocaisPorEmpresa", $this->idUsuarioSessao);
             return -2;    
         }
     }
@@ -108,11 +104,7 @@ class DaoLocal{
             return $listaDeLocais;
             
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoLocal.gerarListaDeLocaisPorEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLocal.gerarListaDeLocais", $this->idUsuarioSessao);
             return -2;    
         }
     }
@@ -134,11 +126,7 @@ class DaoLocal{
             return $tiposLocais;
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoLocal.gerarListaDeLocaisPorEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLocal.gerarListaDeTIpos", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -159,11 +147,7 @@ class DaoLocal{
                 return "";
             }
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(null ,$e->getMessage(), "DaoLocal.selecionarTipoLocal", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLocal.selecionarTipoLocal", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -185,10 +169,7 @@ class DaoLocal{
                 return -2;
             }
         } catch (Exception $e){
-            $erro = new Erro(null, $e->getMessage(), "DaoLocal.alterarLocal", (new DateTime())->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLocal.alterarLocal", $this->idUsuarioSessao);
             return -2;
         }
     }

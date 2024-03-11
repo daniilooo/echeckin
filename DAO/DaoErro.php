@@ -23,9 +23,7 @@ class DaoErro
 
         $stmt = $this->conexao->prepare("INSERT INTO {$this->TBL_ERRO} (DESC_ERRO, LOCAL, DATA, FK_USUARIO) VALUES (?,?,?,?)");
         $stmt->bind_param("ssss", $descricaoErro, $local, $data, $usuario);
-
-        echo $data;
-
+        
         if ($stmt->execute()) {
             return true;
         } else {

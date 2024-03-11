@@ -13,6 +13,13 @@ class DaoIlha{
         $this->idUsuarioSessao = $idUsuarioSessao;
     }
 
+    private function inserirErro($erro, $localErro, $fkUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime())->format('Y-m-d H:i:s'), $fkUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);
+    }
+
+
     function inserirIlha(Ilha $ilha){
         $idEmpresa = $ilha->getIdEmpresa();
         $descIlha = $ilha->getDescIlha();
@@ -28,11 +35,7 @@ class DaoIlha{
                 return -1;
             }
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoIlha.inserirIlha", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoIlha.inserirIlha", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -57,11 +60,7 @@ class DaoIlha{
             }
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoIlha.selecionarIlha", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoIlha.selecionarIlha", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -80,11 +79,7 @@ class DaoIlha{
                 return -1;
             }
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoIlha.alterarStatusIlha", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoIlha.alterarStatusIlha", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -111,11 +106,7 @@ class DaoIlha{
             return $listaDeIlhas;
             
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoIlha.gerarListaIlhas", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoIlha.gerarListaIlhas", $this->idUsuarioSessao);
             return null;    
         }
     }

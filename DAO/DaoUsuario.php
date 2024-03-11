@@ -15,6 +15,12 @@ class DaoUsuario
         $this->idUsuarioSessao = $idUsuarioSessao;
     }
 
+    private function inserirErro($erro, $localErro, $fkUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime())->format('Y-m-d H:i:s'), $fkUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);
+    }
+
     /**
      * @return $idUsuario
      * Tratamento de retorno:
@@ -54,11 +60,7 @@ class DaoUsuario
             }
 
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.inserirUsuario", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.inserirUsuario", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -88,11 +90,7 @@ class DaoUsuario
             }
 
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.selecionarUsuario", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.selecionarUsuario", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -114,11 +112,7 @@ class DaoUsuario
     
             return $qtdUserEmp;
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.contarUsuarioPorEmpresa", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.contarUsuarioPorEmpresa", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -138,11 +132,7 @@ class DaoUsuario
                 return $row['QUANTIDADE_USUARIOS'];
             }
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.contagemDeUsuarios", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.contagemDeUsuarios", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -168,11 +158,7 @@ class DaoUsuario
             }
 
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.contagemDeUsuarios", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.atualizarUsuario", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -192,11 +178,7 @@ class DaoUsuario
                 return -1;
             }
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.alterarStatus", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.alterarStatus", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -212,11 +194,7 @@ class DaoUsuario
                 return -1;
             }
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.resetarSenha", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.resetarSenha", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -250,11 +228,7 @@ class DaoUsuario
             }
 
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.alterarStatus", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.alterarSenha", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -284,12 +258,30 @@ class DaoUsuario
             return $listaDeUsuarios;
 
         } catch (Exception $e) {
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoUsuario.gerarListaUsuarios", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoUsuario.gerarListaUsuarios", $this->idUsuarioSessao);
             return -2;
+        }
+    }
+
+    function gerarListaUsuarioPorEmpresa($idEmpresa){
+        $listaUsuario = [];
+        try{
+            $stmt = $this->conexao->prepare("SELECT ID_USUARIO, NOME FROM {$this->TBL_USUARIO} WHERE EMPRESA = ?");
+            $stmt->bind_param("i", $idEmpresa);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_assoc()){
+                $usuario = new Usuario($row['ID_USUARIO'], $row['NOME'], null, null, null, null, null, null);
+                $listaUsuario[] = $usuario;
+            }
+
+            $result->close();
+            return $listaUsuario;
+        }catch (Exception $e){
+            $this->inserirErro($e->getMessage(), "DaoUsuario.gerarListaUsuarioPorEmpresa", $this->idUsuarioSessao);
+            return null;
         }
     }
 }

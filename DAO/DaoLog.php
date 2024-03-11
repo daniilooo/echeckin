@@ -14,6 +14,13 @@ class DaoLog{
         $this->idUsuarioSessao = $idUsuarioSessao;
     }
 
+    private function inserirErro($erro, $localErro, $fkUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime())->format('Y-m-d H:i:s'), $fkUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);
+    }
+
+
     function inserirLog(Log $log){
         $regLog = $log->getRegLog();
         $dataHora = $log->getDataHora();
@@ -29,11 +36,7 @@ class DaoLog{
                 return -1;
             }
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoLog.InserirLog", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLog.inserirLog", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -60,11 +63,7 @@ class DaoLog{
             return $listaLog;
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoLog.gerarListaLog", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLog.gerarListaLog", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -85,11 +84,7 @@ class DaoLog{
             }
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0, $e->getMessage(), "DaoLog.recuperarUltimoLog", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLog.recuperarUltimoLog", $this->idUsuarioSessao);
             return -2;
         }
     }

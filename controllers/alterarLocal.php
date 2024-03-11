@@ -26,6 +26,8 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
 
         $local = new Local($idLocal, $empresa, $tipoLocal, $descLocal, $status);
 
+        echo $local;
+
         if($daoLocal->alterarLocal($local) > 0){
             $log = new Log(null, "Alteração de local.\nID do local alterado: ".$idLocal, (new DateTime())->format('Y-m-d H:i:s'), $idUsuario);
             $daoLog = new DaoLog($conexao->conectar(), $idUsuario);

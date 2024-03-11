@@ -14,6 +14,12 @@ class DaoNivelAcesso{
         $this->idUsuarioSessao = $idUsuarioSessao;
     }
 
+    private function inserirErro($erro, $localErro, $fkUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime())->format('Y-m-d H:i:s'), $fkUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);
+    }
+
     function inserirNivelAcesso(NivelAcesso $nivelAcesso){
         $descNivelAcesso = $nivelAcesso->getDescNivelAcesso();
 
@@ -28,9 +34,7 @@ class DaoNivelAcesso{
             }
 
         } catch (Exception $e){
-            $erro = new Erro(null, $e->getMessage(), "DaoNivelAcesso.inserirNivelAcesso", (new DateTime())->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $daoErro = new DaoErro((new Conexao)->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoNivelAcesso.inserirNivelAcesso", $this->idUsuarioSessao);
             return -2;
         }
     }
@@ -50,9 +54,7 @@ class DaoNivelAcesso{
 
             return $listaNivelAcesso;
         } catch(Exception $e){
-            $erro = new Erro(null, $e->getMessage(), "DaoNivelAcesso.gerarListaNiveisAcesso", (new DateTime())->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $daoErro = new DaoErro((new Conexao)->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoNivelAcesso.gerarListaNiveisAcesso", $this->idUsuarioSessao);
             return null;
         }
     }
@@ -81,9 +83,7 @@ class DaoNivelAcesso{
             return $listaContagem;
 
         } catch (Exception $e){
-            $erro = new Erro(null, $e->getMessage(), "DaoNivelAcesso.contarUsuariosPorCargo", (new DateTime())->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $daoErro = new DaoErro((new Conexao)->conectar());
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoNivelAcesso.contarUsuariosPorCargo", $this->idUsuarioSessao);
             return null;
         }
     }

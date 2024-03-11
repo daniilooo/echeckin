@@ -60,6 +60,7 @@ class Local{
         return
         "<br>ID do Local: ".$this->getIdLocal().
         "<br>FK Empresa: ".$this->getFkEmpresa().
+        "<br>Desc local: ".$this->getDescLocal().
         "<br>FK tipo do local: ".$this->getFkTipoLocal().
         "<br>Status do local: ".$this->getStatusLocal()."<br>";
     }

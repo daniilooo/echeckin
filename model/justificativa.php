@@ -70,8 +70,4 @@ class Justificativa{
     }
 }
 
-$justificativa = new Justificativa(1, 1, 1, "Teste de construtor de classe", (new DateTime())->format('Y-m-d H:i:s'));
-
-echo $justificativa;
-
 ?>

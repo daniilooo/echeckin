@@ -128,6 +128,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         
                         <!-- Formulário de cadastro -->
                         <form action="<?php echo verificarAction() ? "../controllers/alterarLocal.php" : "../controllers/cadastrarLocais.php"?>" method="POST">
+                            <?php if(verificarAction()){?>
+                                <input type="hidden" id="idLocal" name="idLocal" value="<?php echo $localAlt->getIdLocal()?>">
+                            <?php } ?>
                             <div class="form-group">
                                 <label for="nome">Empresa:</label>
                                 <select name="empresa" id="empresa" class="form-control">

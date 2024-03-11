@@ -13,6 +13,12 @@ class DaoCheckin{
         $this->idUsuarioSessao = $idUsuarioSessao;
     }
 
+    private function inserirErro($erro, $localErro, $fkUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime)->format('Y-m-d H:i:s'), $fkUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);
+    }
+
     function inserirCheckin(Checkin $checkin){
         $fkLocal = $checkin->getFkLocal();
         $fkUsuario = $checkin->getFkUsuario();
@@ -29,11 +35,7 @@ class DaoCheckin{
             }
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoCheckin.inserirCheckin", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoCheckin.inserirCheckin", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -56,11 +58,7 @@ class DaoCheckin{
             }
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoCheckin.detalharCheckin", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoCheckin.detalharCheckin", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -84,12 +82,8 @@ class DaoCheckin{
 
             return $listaDeCheckins;        
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoCheckin.detalharCheckin", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
-            return null;    
+            $this->inserirErro($e->getMessage(), "DaoCheckin.gerarListaCheckinPorLocal", $this->idUsuarioSessao);
+            return null;     
         }
     }
 

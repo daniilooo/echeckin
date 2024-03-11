@@ -30,7 +30,7 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>iCloud-like Page</title>
+        <title>eCheckin - Gerar relatórios</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <style>
             body {
@@ -138,7 +138,7 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                         </tr>
                                         <tr>
                                             <td>Justificativas</td>
-                                            <td><button class="btn btn-primary" onclick="relJustificativas()">Gerar
+                                            <td><button class="btn btn-primary" onclick="relJustificativas(<?php echo $empresa->getIdEmpresa()?>)">Gerar
                                                     relatórios</button></td>
                                         </tr>
                                     </tbody>
@@ -167,8 +167,8 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
                 window.location.href = "checkInPorLocal.php";
             }
 
-            function relJustificativas() {
-                window.location.href = "relatorioJustificativas.php";
+            function relJustificativas(idEmpresa) {
+                window.location.href = "relatorioJustificativas.php?idEmpresa="+idEmpresa;
             }
 
         </script>

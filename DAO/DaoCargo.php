@@ -14,6 +14,12 @@ class DaoCargo{
         $this->idUsuarioSessao = $idUsuarioSessao;
     }
 
+    private function inserirErro($erro, $localErro, $idUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime())->format('Y-m-d H:i:s'), $idUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);        
+    }
+
     function inserirCargo(Cargo $cargo){
 
         $descricaoCargo = $cargo->descricaoCargo;
@@ -30,11 +36,7 @@ class DaoCargo{
                 return -1;
             }
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoCargo.inserirCargo", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoCargo.inserirCargo", $this->idUsuarioSessao);
             return null;    
         }
 
@@ -56,11 +58,7 @@ class DaoCargo{
             }
                         
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoCargo.selecionarCargo", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoCargo.selecionarCargo", $this->idUsuarioSessao);
             return null;    
         }
     }
@@ -80,11 +78,7 @@ class DaoCargo{
             return $listaDeCargos;
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoCargo.gerarListaCargo", $dataHoraFormatada->format('Y-m-d H:i:s'), $this->idUsuarioSessao);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoCargo.gerarListaCargo", $this->idUsuarioSessao);
             return null;    
         }
     }

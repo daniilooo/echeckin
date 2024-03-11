@@ -183,7 +183,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                                         <?php echo tipoLocal($daoLocal, $local->getFkTipoLocal()) ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo $local->getDescLocal() ?>
+                                                        <a href="cadastroDeLocais.php?idLocal=<?php echo $local->getIdLocal()?>"><?php echo $local->getDescLocal() ?></a>
                                                     </td>
                                                     <td>
                                                         <?php echo status($local->getStatusLocal()) ?>

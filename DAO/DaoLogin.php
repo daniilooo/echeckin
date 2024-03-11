@@ -15,6 +15,12 @@ class DaoLogin{
         $this->conexao = $conexao;
     }
 
+    private function inserirErro($erro, $localErro, $fkUsuario){
+        $erro = new Erro(null, $erro, $localErro, (new DateTime())->format('Y-m-d H:i:s'), $fkUsuario);
+        $daoErro = new DaoErro((new Conexao())->conectar());
+        $daoErro->inserirErro($erro);
+    }
+
     function login(Login $acesso){
 
         $login = $acesso->getLogin();
@@ -36,11 +42,7 @@ class DaoLogin{
             return false;
 
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoLogin.login", $dataHoraFormatada->format('Y-m-d H:i:s'), 0);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLogin.login", 0);
             return -2;    
         }
     }
@@ -63,11 +65,7 @@ class DaoLogin{
 
             return null;
         } catch (Exception $e){
-            $dataHoraFormatada = new DateTime();
-            $erro = new Erro(0,$e->getMessage(), "DaoLogin.retornarUsuario", $dataHoraFormatada->format('Y-m-d H:i:s'), 0);
-            $conexaoTblErro = new Conexao();
-            $daoErro = new DaoErro($conexaoTblErro->conectar());            
-            $daoErro->inserirErro($erro);
+            $this->inserirErro($e->getMessage(), "DaoLogin.retornarUsuario", 0);
             return -2;    
         }
     
