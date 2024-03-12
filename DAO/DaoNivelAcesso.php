@@ -40,53 +40,23 @@ class DaoNivelAcesso{
     }
 
     function gerarListaNiveisAcesso(){
-        $listaNivelAcesso[] =[];
         try{
-            $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_NIVEIS_ACESSO}");
+            $stmt = $this->conexao->prepare("SELECT ID_NIVEL_ACESSO, DESC_NIVEL_ACESSO, STATUS_NIVELACESSO FROM {$this->TBL_NIVEIS_ACESSO}");
             $stmt->execute();
-
             $result = $stmt->get_result();
             
             while($row = $result->fetch_assoc()){
                 $nivelAcesso = new NivelAcesso($row['ID_NIVEL_ACESSO'], $row['DESC_NIVEL_ACESSO'], $row['STATUS_NIVELACESSO']);
-                $listaNivelAcesso[] = $nivelAcesso;
+                $listaNiveisAcesso[] = $nivelAcesso;
             }
 
-            return $listaNivelAcesso;
-        } catch(Exception $e){
+            return $listaNiveisAcesso;
+        } catch (Exception $e){
             $this->inserirErro($e->getMessage(), "DaoNivelAcesso.gerarListaNiveisAcesso", $this->idUsuarioSessao);
             return null;
         }
-    }
+    } 
 
-    function contarUsuariosPorCargo(){
-        $listaContagem = [];
-        try{
-            $stmt = $this->conexao->prepare("SELECT C.ID_CARGO, COUNT(U.ID_USUARIO) AS QUANTIDADE
-                                            FROM TBL_CARGOS C
-                                            INNER JOIN TBL_USUARIO U ON C.ID_CARGO = U.CARGO
-                                            GROUP BY C.ID_CARGO");
-            
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            while($row = $result->fetch_assoc()){
-                $idCargo = $row['ID_CARGO'];
-                $quantidade = $row['QUANTIDADE'];
-                
-                $listaContagem[] =[
-                    'idCargo' => $idCargo,
-                    'quantidade' => $quantidade
-                ];
-            }
-
-            return $listaContagem;
-
-        } catch (Exception $e){
-            $this->inserirErro($e->getMessage(), "DaoNivelAcesso.contarUsuariosPorCargo", $this->idUsuarioSessao);
-            return null;
-        }
-    }
 }
 
 ?>

@@ -160,7 +160,7 @@ class DaoLocal{
         $status = $local->getStatusLocal();
 
         try{
-            $stmt = $this->conexao->prepare("UPDATE {this->TBL_LOCAIS} SET FK_EMPRESA = ?, FK_TIPO_LOCAL = ?, DESC_LOCAL = ?, STATUS_LOCAL = ? WHERE ID_LOCAL = ?");
+            $stmt = $this->conexao->prepare("UPDATE {$this->TBL_LOCAIS} SET FK_EMPRESA = ?, FK_TIPO_LOCAL = ?, DESC_LOCAL = ?, STATUS_LOCAL = ? WHERE ID_LOCAL = ?");
             $stmt->bind_param("iisii", $empresa, $tipo, $descricao, $status, $idLocal);
 
             if($stmt->execute()){

@@ -19,6 +19,12 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
     $usuario = $daoUsuario->selecionarUsuario($idUsuario);
     $listaDeErro = $daoErro->gerarListaErros();
+
+
+    function nomeUsuario($daoUsuario, $idUsuario){
+        $usuario = $daoUsuario->selecionarUsuario($idUsuario);
+        return $usuario->getNome();
+    }
 }
 
 ?>
@@ -153,7 +159,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                                 <?php echo $erro->getData() ?>
                                             </td>
                                             <td>
-                                                <?php echo $erro->getUsuario() ?>
+                                                <?php echo nomeUsuario($daoUsuario, $erro->getUsuario()) ?>
                                             </td>
                                         <tr>
                                         <?php } ?>

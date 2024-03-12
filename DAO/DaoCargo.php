@@ -83,6 +83,41 @@ class DaoCargo{
         }
     }
 
+    /*
+    ESSE MÉTODO CONSULTA A VIEW QUANT_USUARIO_CARGO CRIADA NO BD.
+    */
+
+    function quantidadeUsuariosCargo($idCargo){
+        try{
+            $stmt = $this->conexao->prepare("SELECT ID_CARGO, DESCRICAO_CARGO, QUANTIDADE_USUARIOS_CARGO FROM QUANT_USUARIO_CARGO WHERE ID_CARGO = ?");
+            $stmt->bind_param("i", $idCargo);
+
+            $stmt->execute();
+            $result = $stmt->get_result();    
+            
+
+            if($result->num_rows > 0){
+                $row = $result->fetch_assoc();
+                $quantUserCargo[] = [
+                    'idCargo' => $row['ID_CARGO'],
+                    'descCargo' => $row['DESCRICAO_CARGO'],
+                    'quantUserCargo' => $row['QUANTIDADE_USUARIOS_CARGO']
+                ];                                
+            } else {
+                $quantUserCargo[] = [
+                    'idCargo' => $idCargo,
+                    'descCargo' => 0,
+                    'quantUserCargo' => 0
+                ];
+            }
+
+            return $quantUserCargo;
+
+        } catch (Exception $e){
+            $this->inserirErro($e->getMessage(), "DaoCargo.quantidadeUsuariosCargo", $this->idUsuarioSessao);
+            return null;
+        }
+    }
 
 }
 

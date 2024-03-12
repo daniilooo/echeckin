@@ -19,8 +19,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $daoLocal = new DaoLocal($conexao->conectar(), $idUsuario);
 
     $usuario = $daoUsuario->selecionarUsuario($idUsuario);
-
-    $listaDeEmpresas = $daoEmpresa->gerarListaEmpresas();
+    
     $listaDeTipos = $daoLocal->gerarListaDeTIpos();
  
     function verificarAction(){
@@ -29,6 +28,13 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         } else {
             return false;
         }
+    }
+
+    if(isset($_GET['idEmpresa'])){
+        $empresa = $daoEmpresa->selecionarEmpresa($_GET['idEmpresa']);
+        $listaDeEmpresas[] = $empresa;        
+    } else {
+        $listaDeEmpresas = $daoEmpresa->gerarListaEmpresas();
     }
 
     if(isset($_GET['idLocal'])){

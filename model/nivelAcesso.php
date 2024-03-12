@@ -50,8 +50,6 @@ class NivelAcesso{
         "<br>Desc nivel acesso: ".$this->getDescNivelAcesso().
         "<br>Status do nivel de acesso: ".$this->getStatusNivelAcesso()."<br>";
     }
-
-
 }
 
 ?>
