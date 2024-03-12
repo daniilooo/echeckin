@@ -266,14 +266,14 @@ class DaoUsuario
     function gerarListaUsuarioPorEmpresa($idEmpresa){
         $listaUsuario = [];
         try{
-            $stmt = $this->conexao->prepare("SELECT ID_USUARIO, NOME FROM {$this->TBL_USUARIO} WHERE EMPRESA = ?");
+            $stmt = $this->conexao->prepare("SELECT ID_USUARIO, NOME, MATRICULA, CARGO, LOGIN FROM {$this->TBL_USUARIO} WHERE EMPRESA = ?");
             $stmt->bind_param("i", $idEmpresa);
 
             $stmt->execute();
             $result = $stmt->get_result();
 
             while($row = $result->fetch_assoc()){
-                $usuario = new Usuario($row['ID_USUARIO'], $row['NOME'], null, null, null, null, null, null);
+                $usuario = new Usuario($row['ID_USUARIO'], $row['NOME'], $row['MATRICULA'], null, $row['CARGO'], $row['LOGIN'], null, null);
                 $listaUsuario[] = $usuario;
             }
 

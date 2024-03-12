@@ -147,7 +147,7 @@ function status($status){
                                         <td><?php echo $empresa->getQtdLocais() ?></td>
                                         <td>
                                             <button class="btn btn-primary" onClick="cadastrarLocal(<?php echo $empresa->getIdEmpresa()?>)">Cadastrar local</button>
-                                            <button class="btn btn-success">Relatório</button>
+                                            <button class="btn btn-success" onClick="relatorioPorEmpresa(<?php echo $empresa->getIdEmpresa()?>)">Relatório</button>
                                             <button class="btn btn-danger">Inativar</button>
                                         </td>
                                     <tr>
@@ -165,6 +165,10 @@ function status($status){
     <script>
         function cadastrarLocal(idEmpresa) {
             window.location.href = "cadastroDeLocais.php?idEmpresa=" + idEmpresa;
+        }
+
+        function relatorioPorEmpresa(idEmpresa){
+            window.location.href = "relatorioPorEmpresa.php?idEmpresa=" + idEmpresa;
         }
     </script>
     <!-- Bootstrap JS and dependencies -->
