@@ -184,14 +184,13 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                 </div>
             </div>
         </div>
-
     </div>
     <footer>
         by PRODEV - Desenvolvimento de sistemas.
     </footer>
     <script>
         function verificarUsuario(idUsuario){
-            alert('ID DO USUARIO: '+idUsuario);
+            window.location.href = "cadastroDeUsuario.php?idUsuarioAlt=" +idUsuario;
         }
     </script>
     <!-- Bootstrap JS and dependencies -->
