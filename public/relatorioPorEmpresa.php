@@ -29,6 +29,31 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
     $listaDeLocaisPorEmpresa = $daoLocal->gerarListaDeLocaisPorEmpresa($empresa->getIdEmpresa());
     $listaDeUsuariosPorEmpresa = $daoUsuario->gerarListaUsuarioPorEmpresa($empresa->getIdEmpresa());
     $listaDecheckinPorEmpresa = $daoCheckin->gerarListaCheckinPorEmpresa($empresa->getIdEmpresa());
+
+    function tipoDoLocal($daoLocal, $idTipoLocal){
+        return $daoLocal->selecionarTipoLocal($idTipoLocal);
+    }
+
+    function status($flagStatus){
+        switch($flagStatus){
+            case 0:
+                return "Inativo";
+            case 1:
+                return "Ativo";
+            default:
+                return "Status desconhecido";
+        }
+    }
+
+    function descLocal($daoLocal, $idLocal){
+        $local = $daoLocal->selecionarLocal($idLocal);
+        return $local->getDescLocal();
+    }
+
+    function nomeUsuario($daoUsuario, $idUsuario){
+        $usuario = $daoUsuario->selecionarUsuario($idUsuario);
+        return $usuario->getNome();
+    }
     
 
 
@@ -126,8 +151,8 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
                                 <?php foreach($listaDeLocaisPorEmpresa as $local){?>
                                 <tr>
                                     <td><?php echo $local->getDescLocal()?></td>
-                                    <td><?php echo $local->getFkTipoLocal()?></td>
-                                    <td><?php echo $local->getStatusLocal()?></td>
+                                    <td><?php echo tipoDoLocal($daoLocal, $local->getFkTipoLocal())?></td>
+                                    <td><?php echo status($local->getStatusLocal())?></td>
                                 </tr>
                                 <?php }?>                                
                             </tbody>
@@ -173,8 +198,8 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
                             <tbody>
                                 <?php for($cont = 0; $cont < count($listaDecheckinPorEmpresa); $cont++){?>
                                 <tr>
-                                    <td><?php echo $listaDecheckinPorEmpresa[$cont]['fkLocal']?></td>
-                                    <td><?php echo $listaDecheckinPorEmpresa[$cont]['fkUsuario']?></td>
+                                    <td><?php echo descLocal($daoLocal, $listaDecheckinPorEmpresa[$cont]['fkLocal'])?></td>
+                                    <td><?php echo nomeUsuario($daoUsuario, $listaDecheckinPorEmpresa[$cont]['fkUsuario'])?></td>
                                     <td><?php echo $listaDecheckinPorEmpresa[$cont]['ocorrencia']?></td>
                                 </tr>
                                 <?php }?>
