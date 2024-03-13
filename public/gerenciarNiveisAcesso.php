@@ -18,16 +18,9 @@
         $daoNiveisAcesso = new DaoNivelAcesso($conexao->conectar(), $idUsuario);
         $usuario = $daoUsuario->selecionarUsuario($idUsuario);
 
-        $listaNiveisAcesso = $daoNiveisAcesso->gerarListaNiveisAcesso();        
-
-        function contagemDeUsuarios($daoNiveisAcesso, $idCargo){
-            $contagemUsuarios = $daoNiveisAcesso->contarUsuariosPorCargo();
-            foreach($contagemUsuarios as $resultado){
-                if($resultado['idCargo'] == $idCargo){
-                    return $resultado['quantidade'];
-                }
-            }
-        }
+        $listaNiveisAcesso = $daoNiveisAcesso->gerarListaNiveisAcesso();
+        
+        $quantNivelAcesso = $daoNiveisAcesso->contagemUsuarioNivelAcesso();
 
         function status($flagStatus){
             switch($flagStatus){
@@ -159,7 +152,13 @@
                                     <tr>
 										<td><?php echo $nivelAcesso->getIdNivelAcesso()?></td>
 										<td><?php echo $nivelAcesso->getDescNivelAcesso()?></td>
-										<td><?php ?></td>
+										<td><?php 
+                                            for($cont = 0; $cont < count($quantNivelAcesso); $cont++){
+                                                if($quantNivelAcesso[$cont]['idNivelAcesso'] == $nivelAcesso->getIdNivelAcesso()){
+                                                    echo $quantNivelAcesso[$cont]['quantUser'];
+                                                }
+                                            }
+                                        ?></td>
 										<td><?php echo status($nivelAcesso->getStatusNivelAcesso())?></td>
                                         <td><button class="btn btn-primary">Configurar privilégios</button></td>
 									<tr>

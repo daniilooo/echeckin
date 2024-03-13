@@ -55,7 +55,29 @@ class DaoNivelAcesso{
             $this->inserirErro($e->getMessage(), "DaoNivelAcesso.gerarListaNiveisAcesso", $this->idUsuarioSessao);
             return null;
         }
-    } 
+    }
+    
+    function contagemUsuarioNivelAcesso(){
+        try{
+            $stmt = $this->conexao->prepare("SELECT NIVEL_ACESSO, COUNT(*) AS QUANT_USER FROM USUARIO_CARGO_ACESSO GROUP BY NIVEL_ACESSO");
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            if($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    $quantNivelAcesso[] = [
+                        'idNivelAcesso' => $row['NIVEL_ACESSO'],
+                        'quantUser' => $row['QUANT_USER']
+                    ];
+                }
+            }
+
+            return $quantNivelAcesso;
+        } catch (Exception $e){
+            $this->inserirErro($e->getMessage(), "DaoNivelAcesso.contagemUsuarioNivelAcesso", $this->idUsuarioSessao);
+            return null;
+        }
+    }
 
 }
 

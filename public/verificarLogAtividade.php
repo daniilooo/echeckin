@@ -136,12 +136,29 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     <div class="card-body">
                         <h5 class="card-title">Verificar Log do sistema</h5>
 
-                        <form class="form-inline mb-3 w-100">
-                            <div class="form-group mr-2 flex-grow-1">
-                                <input type="text" class="form-control w-100" placeholder="Buscar por LOG">
+                        <div class="w-100 mb-3 d-flex"> <!-- Adicionado w-100 e d-flex -->
+                                <form class="form-inline w-100"> <!-- Adicionado w-100 para ocupar 100% da largura -->
+                                    <div class="form-group mr-2 flex-grow-1">                                        
+                                        <select class="form-control w-100 mb-3">                                            
+                                            <option value="00" selected disabled>Selecione o tipo de log</option>
+                                            <option value="1">Inclusão de empresa</option>
+                                            <option value="2">Inclusão de local</option>
+                                            <option value="3">Inclusão de usuário</option>
+                                            <option value="4">Inclusão de cargo</option>
+                                            <option value="5">Alteração de empresa</option>
+                                            <option value="6">Alteração de local</option>
+                                            <option value="7">Alteração de usuário</option>
+                                            <option value="8">Alteração de cargo</option>
+                                            <option value="9">Alteração de status de empresa</option>
+                                            <option value="10">Alteração de status de local</option>
+                                            <option value="11">Alteração de status de usuário</option>
+                                            <option value="12">Alteração de status de cargo</option>
+                                            <option value="13">Geração de checkpoint</option>
+                                        </select>  
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Buscar</button>
+                                </form>
                             </div>
-                            <button type="submit" class="btn btn-primary">Buscar</button>
-                        </form>
                         
                         <!-- Tabela de usuários -->
                         <div class="mx-auto"> <!-- Adicionado para centralizar horizontalmente -->

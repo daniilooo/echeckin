@@ -112,7 +112,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
-                    </li>
+                    </li>                    
                     <li class="nav-item">
                         <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
@@ -144,7 +144,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                             <h5 class="card-title">Empresas</h5>
                             <p class="card-text">Veja e gerencie todas as empresas cadastradas no sistema.</p>
                             <a href="gerenciamentoEmpresas.php" class="btn btn-primary">Gerenciar empresa</a>
-                            <a href="#" class="btn btn-primary">Cadastrar nova empresa</a>
+                            <a href="cadastroDeEmpresa.php" class="btn btn-primary">Cadastrar nova empresa</a>
                         </div>
                     </div>
                 </div>
@@ -211,8 +211,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             </div>
         </div>
 
-        <footer>
-            by PRODEV - Desenvolvimento de sistemas.
+        <footer>            
+            by PRODEV - Desenvolvimento de sistemas                         
         </footer>
         <!-- Bootstrap JS and dependencies -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

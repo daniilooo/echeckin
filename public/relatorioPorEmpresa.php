@@ -153,7 +153,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Locais cadastrados para essa empresa</h5>
+                        <h5 class="card-title">Locais cadastrados para <?php echo $empresa->getRazaoSocial()?></h5>
                         <table class="table">
                             <thead>
                                 <th>Desc. Local</th>
@@ -176,7 +176,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Usuários cadatrados para essa empresa</h5>
+                        <h5 class="card-title">Usuários cadatrados para <?php echo $empresa->getRazaoSocial()?></h5>
                         <table class="table">
                             <thead>
                                 <th>Matricula</th>
@@ -201,7 +201,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Ultimos eventos de checkin</h5>
+                        <h5 class="card-title">Ultimos eventos de checkin em <?php echo $empresa->getRazaoSocial()?></h5>
                         <table class="table">
                             <thead>
                                 <th>Local</th>
