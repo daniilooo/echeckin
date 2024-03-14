@@ -9,11 +9,12 @@ class Conexao {
  
     function conectar(){
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        // Verificação da conexão.
+        
         if ($this->conn->connect_error) {
             die("Erro na conexão com o banco de dados: " . $this->conn->connect_error);
         }
-        return $this->conn; // Retorne a conexão
+
+        return $this->conn; 
     }
 
     function fecharConexao(){

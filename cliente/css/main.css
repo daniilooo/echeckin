@@ -1,0 +1,94 @@
+/* Estilização do corpo da pagina */
+body {
+    margin-top: 10%;
+    height: 100vh;
+    margin-top: 82px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+/* Estilização do botão de Login */
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+/* Estilização do cabeçalho da tela de login */
+.titulo {
+    padding: 10px;
+    text-align: start;
+    margin-left: -20px;
+    margin-top: -20px;
+    font-size: 14px;
+    color: white;
+    height: 44px;
+    border-radius: 7px;
+    width: 109%;
+    background-color: #006BA6 !important;
+    margin-bottom: 26px;
+}
+
+/* Estilização das informações do Footer */
+a {
+    color: #337ab7;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* Estilização do Container da Tela de Login */
+.login-container {
+    width: 480px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background-color: #fff;
+}
+.logo {
+    width: 60%;
+    margin-left: 89%;
+}
+
+@media (max-width: 767px) {
+
+    /* Estilização do Botão da pagina */
+    .logo {
+        width: 127%;
+    }
+    .titulo {
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+}
+
+@media (max-width: 767px){
+.titulo {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    color: #c7254e;
+    font-size: 15px;
+    font-weight: 600;
+}
+}
+/* Estilização para ajustar a responsividade da Pagina */
+@media (max-width: 767px) {
+
+    /* Estilização do Corpo da Pagina */
+    .corpo {
+        margin-top: 18%;
+    }
+
+    /* Estilização do Botão da pagina */
+   .logo {
+        width: 127%; 
+    }
+    .titulo {
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+    }
+}

@@ -14,7 +14,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     
     $idUsuario = $_SESSION['idUsuario'];
     $conexao = new Conexao();
-    $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);
+    $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);    
 
     if(isset($_GET['idLocal'])){
         $idLocal = $_GET['idLocal'];
@@ -25,14 +25,14 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
         if($idCheckin > 0){
             echo "<script>alert('Checkin realizado com sucesso.')</script>";
-            header("Location: ../public/realizarCheckin.php");
+            header("Location: ../cliente/index2.php?checkin=true");
             exit;
         } else {
             echo "<script>alert('Não foi possível realizar o checkin, contate o administrador do sistema.')</script>";
-            header("Location: ../public/realizarCheckin.php");
+            header("Location: ../cliente/index2.php?checkin=false");
             exit;
         }
-    }       
+    }      
 
 } else {
     echo "<script>alert('Para utilizar o sistema eCheckin é necessário fazer login.');</script>";

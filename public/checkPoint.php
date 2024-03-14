@@ -90,7 +90,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <script type="text/javascript">
         function generateQRCode(idLocal) {
 
-            const local = true;
+            const local = false;
             var url = null;
 
             if(local){
