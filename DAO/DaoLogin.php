@@ -8,7 +8,7 @@ include_once(__DIR__ . '/../model/login.php');
 
 class DaoLogin{
 
-    private $TBL_USUARIO = "TBL_USUARIO";
+    private $TBL_USUARIO = "tbl_usuario";
     private $conexao;
 
     function __construct($conexao){

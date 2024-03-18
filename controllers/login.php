@@ -3,6 +3,7 @@
 include_once(__DIR__ . '/../model/login.php');
 include_once(__DIR__ . '/../DAO/DaoLogin.php');
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {   
     
     if(isset($_POST['cliente'])){
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $daoLogin = new DaoLogin((new Conexao())->conectar());
 
         if ($daoLogin->login($login)) {
-            $daoLogin = new DaoLogin((new Conexao())->conectar());
+            $daoLogin = new DaoLogin((new Conexao())->conectar());           
 
             session_start();
             $_SESSION['idUsuario'] = $daoLogin->retornarUsuario($login);
@@ -61,5 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 }
+
+
 
 ?>

@@ -4,7 +4,7 @@ include_once(__DIR__ .'/DaoErro.php');
 include_once(__DIR__ .'/../model/empresa.php');
 
 class DaoEmpresa{
-    private $TBL_EMPRESA = "TBL_EMPRESA";
+    private $TBL_EMPRESA = "tbl_empresa";
     private $conexao;
     private $idUsuarioSessao;
 

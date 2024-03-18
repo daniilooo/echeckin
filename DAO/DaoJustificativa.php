@@ -5,7 +5,7 @@ include_once(__DIR__ . '/../model/justificativa.php');
 
 class DaoJustificativa
 {
-    private $TBL_JUSTIFICATIVA = "TBL_JUSTIFICATIVA";
+    private $TBL_JUSTIFICATIVA = "tbl_justificativa";
     private $conexao;
     private $idUsuarioSessao;
 

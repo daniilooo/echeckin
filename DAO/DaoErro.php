@@ -5,7 +5,7 @@ include_once(__DIR__ . '/../model/erro.php');
 
 class DaoErro
 {
-    private $TBL_ERRO = "TBL_ERRO";
+    private $TBL_ERRO = "tbl_erro";
     private $conexao;
 
     function __construct($conexao)

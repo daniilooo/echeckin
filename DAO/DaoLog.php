@@ -5,7 +5,7 @@ include_once(__DIR__ . '/../model/log.php');
 
 class DaoLog{
 
-    private $TBL_LOG = "TBL_LOG";
+    private $TBL_LOG = "tbl_log";
     private $conexao;
     private $idUsuarioSessao;
 

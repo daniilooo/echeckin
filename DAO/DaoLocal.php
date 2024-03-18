@@ -6,7 +6,7 @@ include_once(__DIR__ .'/../model/tipoLocal.php');
 
 class DaoLocal{
     private $TBL_LOCAIS = "TBL_LOCAIS";
-    private $TBL_TIPOS_LOCAIS = "TBL_TIPOS_LOCAIS";
+    private $TBL_TIPOS_LOCAIS = "tbl_locais";
 
     private $conexao;
     private $idUsuarioSessao;

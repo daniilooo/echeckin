@@ -4,7 +4,7 @@ include_once(__DIR__ . '/DaoErro.php');
 include_once(__DIR__ . '/../model/checkin.php');
 
 class DaoCheckin{
-    private $TBL_CHECKIN = "TBL_CHECKIN";
+    private $TBL_CHECKIN = "tbl_checkin";
     private $conexao;
     private $idUsuarioSessao;
 

@@ -5,7 +5,7 @@ include_once(__DIR__ . '/../model/cargo.php');
 
 class DaoCargo{
 
-    private $TBL_CARGOS = "TBL_CARGOS";
+    private $TBL_CARGOS = "tbl_cargos";
     private $conexao;
     private $idUsuarioSessao;
 

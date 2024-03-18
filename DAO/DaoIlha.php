@@ -4,7 +4,7 @@ include_once(__DIR__ .'/DaoErro.php');
 include_once(__DIR__ .'/../model/ilha.php');
 
 class DaoIlha{
-    private $TBL_ILHA = "TBL_ILHAS";
+    private $TBL_ILHA = "tbl_ilhas";
     private $conexao;
     private $idUsuarioSessao;
 

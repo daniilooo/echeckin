@@ -1,6 +1,12 @@
 <?php
 
 class Conexao {
+    /* DADOS CONEXÃO COM O BD EM AMBIENTE DE HOMOLOGAÇÃO
+    private $servername = "localhost";
+    private $username = "f4fsis66_echeckin";
+    private $password = "Klm3pt4af";
+    private $dbname = "f4fsis66_echeckin";*/
+
     private $servername = "localhost";
     private $username = "root";
     private $password = "";

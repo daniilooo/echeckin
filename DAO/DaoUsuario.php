@@ -5,7 +5,7 @@ include_once(__DIR__ . '/DaoErro.php');
 
 class DaoUsuario
 {
-    private $TBL_USUARIO = "TBL_USUARIO";
+    private $TBL_USUARIO = "tbl_usuario";
     private $conexao;
     private $idUsuarioSessao;
 

@@ -5,7 +5,7 @@ include_once(__DIR__ . '/../model/nivelAcesso.php');
 
 class DaoNivelAcesso{
 
-    private $TBL_NIVEIS_ACESSO = "TBL_NIVEIS_ACESSO";
+    private $TBL_NIVEIS_ACESSO = "tbl_niveis_acesso";
     private $conexao;
     private $idUsuarioSessao;
 
