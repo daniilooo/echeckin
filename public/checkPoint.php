@@ -90,13 +90,20 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <script type="text/javascript">
         function generateQRCode(idLocal) {
 
-            const local = false;
-            var url = null;
+            const local = 3;
+            var url = null;            
 
-            if(local){
-                url = "localhost/echeckin/controllers/checkin.php?idLocal="
-            } else {
-                url = "http://10.80.0.30/echeckin/controllers/checkin.php?idLocal="
+            switch (local) {
+                case 1:
+                    url = "localhost/echeckin/controllers/checkin.php?idLocal="
+                    break;
+                case 2:
+                    url = "http://10.80.0.30/echeckin/controllers/checkin.php?idLocal="
+                    break;
+                case 3:
+                    url = "https://sysdesk.com.br/echeckin/controllers/checkin.php?idLocal="
+                default:
+                    break;
             }
 
             let urlLocal = url + idLocal;

@@ -33,7 +33,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>iCloud-like Page</title>
+    <title>eCheckin - Cliente</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -114,25 +114,23 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         </div>
     </div>
 
-
     <script>
 
     function abrirLeitorQRCode() {
-    // Verificar se o dispositivo é um dispositivo Android
-    const isAndroid = /Android/i.test(navigator.userAgent);
+        // Verificar se o dispositivo é um dispositivo Android
+        const isAndroid = /Android/i.test(navigator.userAgent);
 
-    // Verificar se o navegador é o Chrome ou o WebView do Android
-    const isChromeOrWebView = /Chrome|WebView/i.test(navigator.userAgent);
+        // Verificar se o navegador é o Chrome ou o WebView do Android
+        const isChromeOrWebView = /Chrome|WebView/i.test(navigator.userAgent);
 
-    if (isAndroid && isChromeOrWebView) {
-        // Abrir o leitor de QR code nativo do Android usando um intent
-        window.location.href = 'intent://scan/#Intent;scheme=zxing;package=com.google.zxing.client.android;end;';
-    } else {
-        // Informar ao usuário que a funcionalidade não está disponível
-        alert('Esta funcionalidade só está disponível em dispositivos Android utilizando o navegador Chrome ou WebView do Android.');
+        if (isAndroid && isChromeOrWebView) {
+            // Abrir o leitor de QR code nativo do Android usando um intent
+            window.location.href = 'intent://scan/#Intent;scheme=zxing;package=com.google.zxing.client.android;end;';
+        } else {
+            // Informar ao usuário que a funcionalidade não está disponível
+            alert('Esta funcionalidade só está disponível em dispositivos Android utilizando o navegador Chrome ou WebView do Android.');
+        }
     }
-    }
-
 
     </script>
 
