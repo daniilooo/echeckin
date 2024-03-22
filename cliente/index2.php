@@ -24,6 +24,13 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             echo "<script>alert('Não foi possível fazer o chekin, contate o adminsitrador do sistema.')</script>";
         }
     }
+} else {
+    echo 
+    "<script>
+        alert('É necessário fazer login para usar o sistema.');
+        window.location.href = '../cliente/index.php';
+    </script>";
+    
 }
 
 ?>
