@@ -1,16 +1,29 @@
 package com.example.echeckin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.hardware.camera2.CameraAccessException;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.hardware.camera2.CameraManager;
+
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -23,58 +36,116 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_IMAGE_CAPTURE = 102;
+    private static final int REQUEST_CAMERA_PERMISSION = 100;
+    private static final int REQUEST_CODE_IMAGE_CAPTURE = 101;
 
-    Button btnCheckin;
+    private TextureView textureView;
+    private Button btnCheckin, btnAcenderFlash;
+    private boolean isFlashlightOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize the button
+        // Initialize views
+        textureView = findViewById(R.id.textureView);
         btnCheckin = findViewById(R.id.btnCheckin);
+        btnAcenderFlash = findViewById(R.id.btnAcenderFlash);
 
-        // Add click event to the button
+        // Check camera permission
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        }
+
+        // Set click event to the button
         btnCheckin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start QR scanner
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.setPrompt("Escaneie o QR Code"); // Prompt to display to the user
-                integrator.initiateScan(); // Start QR Code scanner activity
+                startQRScanner();
+            }
+        });
+
+        btnAcenderFlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acenderFlash();
             }
         });
     }
 
-    // Method to handle the QR Code scanner result
+    // Method to toggle flashlight
+    private void acenderFlash() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+            try {
+                String cameraId = cameraManager.getCameraIdList()[0];
+                cameraManager.setTorchMode(cameraId, !isFlashlightOn);
+                isFlashlightOn = !isFlashlightOn;
+                btnAcenderFlash.setText(isFlashlightOn ? "Desligar lanterna" : "Ligar lanterna");
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to toggle flashlight", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    // Method to start QR scanner
+    private void startQRScanner() {
+        // Check camera permission again before starting the scanner
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            // Toggle flashlight on
+            acenderFlash();
+
+            // Start QR scanner after a short delay (to ensure flashlight is on)
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                    integrator.setPrompt("Escaneie o QR Code"); // Prompt to display to the user
+                    integrator.initiateScan(); // Start QR Code scanner activity
+                }
+            }, 500); // Delay of 500 milliseconds
+        } else {
+            Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    // Method to handle the result of QR scanner
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null && result.getContents() != null) {
             String qrCodeContent = result.getContents();
-            Toast.makeText(this, "QR Code: " + qrCodeContent, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Realizando checkin: " + qrCodeContent, Toast.LENGTH_SHORT).show();
 
-            // Take a screenshot of the camera preview and save it
-            takeScreenshotAndSave();
-
-            // Open the URL of the QR Code
-            openURL(qrCodeContent);
-        } else if (requestCode == REQUEST_CODE_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            // Save the screenshot
-            saveBitmap(imageBitmap);
+            // Take screenshot and save
+            takeScreenshot();
         }
     }
 
-    // Method to take a screenshot of the camera preview and save it
-    private void takeScreenshotAndSave() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_CODE_IMAGE_CAPTURE);
+    // Method to take screenshot and save
+    private void takeScreenshot() {
+        // Check if textureView is available
+        if (textureView.isAvailable()) {
+            // Get the bitmap of the texture view (camera preview)
+            Bitmap bitmap = textureView.getBitmap();
+
+            // Rotate the bitmap by 90 degrees
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+            // Save the screenshot to external storage
+            saveBitmap(bitmap);
+        } else {
+            Toast.makeText(this, "TextureView is not available", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -98,17 +169,24 @@ public class MainActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
-            Toast.makeText(this, "Screenshot saved: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Salvando evidência: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Failed to save screenshot", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Não foi possível salvar a evidência", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Method to open the URL of the QR Code
-    private void openURL(String url) {
-        // Open the URL in the default browser
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(intent);
+    // Handle permission request result
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Camera permission granted
+                // You may initialize your camera here if required
+            } else {
+                // Camera permission denied
+                Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
