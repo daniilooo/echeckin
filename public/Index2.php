@@ -63,6 +63,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
             .card {
                 margin-bottom: 20px;
+                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
             }
 
             .user-box {

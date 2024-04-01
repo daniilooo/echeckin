@@ -30,8 +30,11 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
     $listaDeLocais = $daoLocal->gerarListaDeLocaisPorEmpresa($empresa->getIdEmpresa()); 
     
     function dadosUsuario($daoUsuario, $idUsuario){
-        return $usuario = $daoUsuario->selecionarUsuario($idUsuario);
+        return $daoUsuario->selecionarUsuario($idUsuario);
     }
+
+    $tipoEmpresa = $daoEmpresa->tipoEmpresa($_GET['idEmpresa']);    
+
 
 }
 
@@ -142,7 +145,7 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
                     <div class="card-body">
                         <h5 class="card-title">Relatório de chekin por empresa<br><?php echo $empresa->getRazaoSocial()?></h5>
                         <?php foreach($listaDeLocais as $local){ ?>
-                            <p class="card-text"><?php echo $local->getDescLocal()?></p>
+                            <p class="card-text"><?php echo ($tipoEmpresa == 1) ? "Ponto de ronda - ".$local->getDescLocal() : "Ilha - ".$local->getDescLocal()?></p>
                         <!-- Tabela do relatório -->
                         <table>
                             <thead>

@@ -21,8 +21,7 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $usuario = $daoUsuario->selecionarUsuario($idUsuario);
     $listaDeEmpresas = $daoEmpresa->gerarListaEmpresas();
 
-
-
+    
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -51,6 +50,7 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
             .card {
                 margin-bottom: 20px;
+                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
             }
 
             footer {
@@ -121,7 +121,7 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                 <p class="card-text">Relatórios disponíveis para empresa</p>
                                 <table class="table">
                                     <thead>
-                                        <th>relatórios</th>
+                                        <th>Relatórios</th>
                                         <th>Ação</th>
                                     </thead>
                                     <tbody>

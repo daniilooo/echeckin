@@ -103,7 +103,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
         <div class="row mt-3">
             <div class="col-md-12 text-center">
-                <p>Ponto de verificação de ronda.<br>Para fazer a verificação é necessário estar logado no sistema.</p>
+                <p>Para fazer a verificação é necessário estar logado no sistema.</p>
             </div>
         </div>
 
