@@ -93,7 +93,7 @@ class DaoCheckin{
     function gerarListaCheckinPorEmpresa($idEmpresa){
         $listaCheckins = [];
         try{
-            $stmt = $this->conexao->prepare("SELECT ID_CHECKIN, FK_LOCAL, FK_EMPRESA, FK_USUARIO, OCORRENCIA FROM CHECKIN_LOCAL_EMPRESA_USUARIO WHERE FK_EMPRESA = ? ORDER BY OCORRENCIA DESC LIMIT 12");
+            $stmt = $this->conexao->prepare("SELECT ID_CHECKIN, FK_LOCAL, FK_EMPRESA, FK_USUARIO, OCORRENCIA FROM checkin_local_empresa_usuario WHERE FK_EMPRESA = ? ORDER BY OCORRENCIA DESC LIMIT 12");
             $stmt->bind_param("i", $idEmpresa);
 
             $stmt->execute();

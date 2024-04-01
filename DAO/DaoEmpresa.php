@@ -114,7 +114,7 @@ class DaoEmpresa{
         $listaEmpresas = [];        
 
         try{
-            $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_EMPRESA}");
+            $stmt = $this->conexao->prepare("SELECT ID_EMPRESA, RAZAO_SOCIAL, CNPJ, STATUS_EMPRESA, QTD_LOCAIS FROM {$this->TBL_EMPRESA} ORDER BY QTD_LOCAIS DESC");
             $stmt->execute();           
 
             $result = $stmt->get_result();
@@ -129,6 +129,26 @@ class DaoEmpresa{
         } catch (Exception $e){
             $this->inserirErro($e->getMessage(), "DaoEmpresa.gerarListaEmpresas", $this->idUsuarioSessao);
             return -2;    
+        }
+    }
+
+    function tipoEmpresa($idEmpresa){
+        try{
+            $stmt = $this->conexao->prepare("SELECT tipo_empresa FROM {$this->TBL_EMPRESA} WHERE ID_EMPRESA = ?");
+            $stmt->bind_param("i", $idEmpresa);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+
+            if($result->num_rows > 0){
+                $row = $result->fetch_assoc();
+                return $row['tipo_empresa'];
+            }
+
+            return 0;
+        } catch (Exception $e){
+            $this->inserirErro($e->getMessage(), "DaoEmpresa.tipoEmpresa", $this->idUsuarioSessao);
+            return -2;
         }
     }
 }

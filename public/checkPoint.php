@@ -1,6 +1,7 @@
 <?php
-include_once(__DIR__ . '/../DAO/DaoLog.php');
-include_once(__DIR__ . '/../DAO/DaoLocal.php');
+include_once (__DIR__ . '/../DAO/DaoLog.php');
+include_once (__DIR__ . '/../DAO/DaoLocal.php');
+include_once (__DIR__ . '/../DAO/DaoEmpresa.php');
 
 session_start();
 $sessionStatus = session_status();
@@ -10,13 +11,27 @@ if (!isset($_SESSION['login'])) {
 }
 
 if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
-    
+
 
     if (isset($_GET['idLocal'])) {
         $idLocal = $_GET['idLocal'];
 
         $daoLocal = new DaoLocal((new Conexao())->conectar(), 1);
         $local = $daoLocal->selecionarLocal($idLocal);
+        $tipoEmpresa = (new DaoEmpresa((new Conexao())->conectar(), $_SESSION['idUsuario']))->tipoEmpresa($local->getFkEmpresa());
+
+        function descTipoLocal($tipoEmpresa)
+        {
+            switch ($tipoEmpresa) {
+                case 1:
+                    return "Ponto de ronda - ";
+                case 2:
+                    return "Ilha - ";
+                default:
+                    return "";
+            }
+        }
+
     }
 } else {
     echo "<script>alert('Para utilizar o sistema eCheckin é necessário fazer login.');
@@ -38,36 +53,51 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <style>
 
         .logotipo {
-            height: 100px;
+            height: 100px;            
         }
 
         #qrcode-container {
             display: flex;
             justify-content: center;
-        }       
+        }
+        
+        .impressao {
+            border: 1px dashed #000;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 20px;
+            display: inline-block;
+        }
+
+        .container-impressao {
+            max-width: 500px; /* Defina a largura máxima que deseja para o conteúdo */
+            margin: auto; /* Centraliza horizontalmente o contêiner */
+        }
        
     </style>
 
 </head>
 
 <body class="bg-light" onload="generateQRCode(<?php echo $local->getIdLocal() ?>)">
-    <div class="container my-5">
+    <div class="container text-center">
+    <div class="container-impressao">
         <div class="row">
-            <div class="col-md-12 text-center">
+            <div class="col-md-8 impressao">
                 <h1>
-                    <?php echo $local->getDescLocal() ?>
+                    <?php echo descTipoLocal($tipoEmpresa) . $local->getDescLocal() ?>
                 </h1>
-            </div>
-        </div>
+            
 
         <div class="row align-items-center">
-            <div class="col-md-6">
-                <img src="img/udLog.png" alt="Logotipo 1" class="img-fluid logotipo">
-            </div>
-
-            <div class="col-md-6 text-right">
-                <img src="img/guiborLog.png" alt="Logotipo 2" class="img-fluid logotipo">
-            </div>
+            <?php if ($tipoEmpresa == 1) { ?>
+                <div class="col-md-12 text-center">
+                    <img src="img/udLog.png" alt="Logotipo 1" class="img-fluid logotipo">
+                </div>
+            <?php } else { ?>    
+                <div class="col-md-6 text-center"> 
+                    <img src="img/guiborLog.png" alt="Logotipo 2" class="img-fluid logotipo">
+                </div>
+            <?php } ?>
         </div>
 
 
@@ -84,7 +114,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                 </div>
             </div>
         </div>
-
+        </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">
