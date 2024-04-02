@@ -37,6 +37,10 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
             font-weight: 300;
         }
     }
+
+    #rodape{
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -45,7 +49,7 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
             echo "<script>alert('Usuário ou senha incorretos.')</script>";
         }
     ?>
-    <div class="container mt-5">
+    <div class="container mt-5 fluid">
         <div class="row justify-content-center col-6 mb-3"><img class="justify-content-center logo" src="../public/img/udLog.png"></div>
         <div class=" container">
             <div class="row justify-content-center">
@@ -79,6 +83,6 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
 <!-- Linha Que serara os conteudos -->
 <hr style="border:1px solid gray;margin-top:3%;" width="100%">
 <!-- Link de referencia a F4F Sistemas -->
-<p align="center"><a href="https://prodevsistemas.com.br" style="text-decoration:none;" target="_blank">© 2024 1.0.0 - PRODEV Sistemas | prodevsistemas.com.br</a></p>
+<p id="rodape" class="fluid"><a href="https://prodevsistemas.com.br" style="text-decoration:none;" target="_blank">© 2024 1.0.0 - PRODEV Sistemas | prodevsistemas.com.br</a></p>
 
 </html>

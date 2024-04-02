@@ -53,7 +53,11 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <style>
 
         .logotipo {
-            height: 100px;            
+            height: 70px;            
+        }
+
+        .titulo{
+            font-size:22px;
         }
 
         #qrcode-container {
@@ -70,7 +74,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         }
 
         .container-impressao {
-            max-width: 500px; /* Defina a largura máxima que deseja para o conteúdo */
+            max-width: 250px; /* Defina a largura máxima que deseja para o conteúdo */
             margin: auto; /* Centraliza horizontalmente o contêiner */
         }
        
@@ -82,21 +86,18 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <div class="container text-center">
     <div class="container-impressao">
         <div class="row">
-            <div class="col-md-8 impressao">
-                <h1>
-                    <?php echo descTipoLocal($tipoEmpresa) . $local->getDescLocal() ?>
-                </h1>
+            <div class="col-md-8 impressao">               
             
 
         <div class="row align-items-center">
             <?php if ($tipoEmpresa == 1) { ?>
-                <div class="col-md-12 text-center">
-                    <img src="img/udLog.png" alt="Logotipo 1" class="img-fluid logotipo">
-                </div>
+                    <div class="col-md-12 text-center">
+                        <img src="img/udLog.png" alt="Logotipo 1" class="img-fluid logotipo">
+                    </div>
             <?php } else { ?>    
-                <div class="col-md-6 text-center"> 
-                    <img src="img/guiborLog.png" alt="Logotipo 2" class="img-fluid logotipo">
-                </div>
+                    <div class="col-md-6 text-center"> 
+                        <img src="img/guiborLog.png" alt="Logotipo 2" class="img-fluid logotipo">
+                    </div>
             <?php } ?>
         </div>
 
@@ -114,6 +115,10 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                 </div>
             </div>
         </div>
+
+            <h1 class="titulo"><br>
+                    <?php echo descTipoLocal($tipoEmpresa) . $local->getDescLocal() ?>
+            </h1>
         </div>
             </div>
         </div>
@@ -144,8 +149,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             qrcodeContainer2.innerHTML = "";
             new QRCode(qrcodeContainer2, {
                 text: urlLocal,
-                width: 300,
-                height: 300,
+                width: 180,
+                height: 180,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
