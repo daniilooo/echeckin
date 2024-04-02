@@ -1,48 +1,40 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leitor de QR Code</title>
-    <script type="text/javascript" src="instascan.min.js"></script>
+    <title>QR Code Reader</title>
+    <script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
 </head>
 <body>
-    <h1>Leitor de QR Code</h1>
-    <button onclick="startScanner()">Iniciar Scanner</button>
-    <video id="preview" style="display:none;"></video>
+    <h1>QR Code Reader</h1>
+    <div id="reader"></div>
 
     <script>
-        function startScanner() {
-            // Verifica se o navegador suporta a API de câmera
-            if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-                // Verifica se é um dispositivo Android
-                if (/Android/i.test(navigator.userAgent)) {
-                    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-
-                    scanner.addListener('scan', function(content) {
-                        alert('QR code detectado: ' + content);
-                        // Aqui você pode fazer o que quiser com o conteúdo do QR code
-                    });
-
-                    Instascan.Camera.getCameras().then(function(cameras) {
-                        if (cameras.length > 0) {
-                            scanner.start(cameras[0]);
-                        } else {
-                            console.error('Nenhuma câmera encontrada.');
-                        }
-                    }).catch(function(e) {
-                        console.error(e);
-                    });
-
-                    // Exibe o vídeo
-                    document.getElementById('preview').style.display = 'block';
-                } else {
-                    alert('Este aplicativo só funciona em dispositivos móveis.');
-                }
-            } else {
-                alert('Seu navegador não suporta a API de câmera.');
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector("#reader"),
+                constraints: {
+                    width: 480,
+                    height: 320,
+                    facingMode: "environment" // or "user" for front camera
+                },
+            },
+            decoder: {
+                readers: ["ean_reader"] // You can specify other types like "qrcode_reader"
             }
-        }
+        }, function(err) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log("Initialization finished. Ready to start");
+            Quagga.start();
+        });
+        
+        Quagga.onDetected(function(result) {
+            console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
+        });
     </script>
 </body>
 </html>

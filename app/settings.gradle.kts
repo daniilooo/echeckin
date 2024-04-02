@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "echeckin"
+rootProject.name = "eCheckin"
 include(":app")

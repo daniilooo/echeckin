@@ -111,7 +111,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     <div class="card-body">
                         <h5 class="card-title">Atividades</h5>
                         <p class="card-text">Atividades de usuários</p>
-                        <a href="#" class="btn btn-primary" onclick="abrirLeitorQRCode()">Realizar checkin</a>
+                        <!--<a href="#" class="btn btn-primary" onclick="abrirLeitorQRCode()">Realizar checkin</a>-->
+                        <button id="btnRealizarCheckin" class="btn btn-primary">Realizar Checkin</button>
                         <a href="#" class="btn btn-primary">Justificativa</a>
                     </div>
                 </div>
@@ -120,6 +121,13 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             
         </div>
     </div>
+
+    <script>
+        document.getElementById("btnRealizarCheckin").addEventListener("click", function() {
+            // Enviar um sinal para o aplicativo Android para abrir o leitor de QR code
+            window.android.openQRCodeScanner();
+        });
+    </script>
 
     <script>
 

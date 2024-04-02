@@ -15,13 +15,15 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $idUsuario = $_SESSION['idUsuario'];
     $conexao = new Conexao();
     $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);    
+    
 
     if(isset($_GET['idLocal'])){
         $idLocal = $_GET['idLocal'];
         $checkin = new Checkin(null, $idLocal, $idUsuario, (new DateTime())->format('Y-m-d H:i:s'));
-        $daoCheckin = new DaoCheckin($conexao->conectar(), $idUsuario);
+        
+        $daoCheckin = new DaoCheckin($conexao->conectar(), $idUsuario);        
 
-        $idCheckin = $daoCheckin->inserirCheckin($checkin);
+        $idCheckin = $daoCheckin->inserirCheckin($checkin);        
 
         if($idCheckin > 0){
             echo "<script>alert('Checkin realizado com sucesso.')</script>";
