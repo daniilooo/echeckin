@@ -57,7 +57,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         }
 
         .titulo{
-            font-size:22px;
+            font-size:14px;
         }
 
         #qrcode-container {
@@ -74,7 +74,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         }
 
         .container-impressao {
-            max-width: 250px; /* Defina a largura máxima que deseja para o conteúdo */
+            max-width: 264px; /* Defina a largura máxima que deseja para o conteúdo */
             margin: auto; /* Centraliza horizontalmente o contêiner */
         }
        
@@ -100,26 +100,22 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     </div>
             <?php } ?>
         </div>
-
-
-        <div class="row mt-3">
-            <div class="col-md-12 text-center">
-                <p>Para fazer a verificação é necessário estar logado no sistema.</p>
-            </div>
-        </div>
-
+        <br>
+        <br>
+        <br>
         <div class="row mt-3">
             <div class="col-md-12 text-center">
                 <div id="qrcode-container" class="mx-auto">
                     <div id="qrcode" class="qrcode"></div>
                 </div>
             </div>
-        </div>
-
-            <h1 class="titulo"><br>
+        </div>            
+            <h1 class="titulo">
                     <?php echo descTipoLocal($tipoEmpresa) . $local->getDescLocal() ?>
+                    <br><br><br><br>
             </h1>
         </div>
+                
             </div>
         </div>
     </div>
@@ -149,8 +145,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             qrcodeContainer2.innerHTML = "";
             new QRCode(qrcodeContainer2, {
                 text: urlLocal,
-                width: 180,
-                height: 180,
+                width: 169,
+                height: 169,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H

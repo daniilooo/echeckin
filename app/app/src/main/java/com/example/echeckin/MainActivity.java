@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Criar o nome do arquivo
-        String fileName = "QRCode_" + System.currentTimeMillis() + ".jpg";
+        String fileName = "Evidencia_" + System.currentTimeMillis() + ".jpg";
 
         // Criar o arquivo de destino
         File destFile = new File(directory, fileName);
