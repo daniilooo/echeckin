@@ -4,8 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.TextureView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +23,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Time;
 
@@ -59,20 +64,23 @@ public class MainActivity extends AppCompatActivity {
 
         if (result != null) {
             if (result.getContents() != null) {
+
                 // URL lida do QR code
                 String qrCodeUrl = result.getContents();
+                captureScreenAndSave();
 
                 // Obtém o caminho da imagem do QR code
-                String qrCodeImagePath = result.getBarcodeImagePath();
+                //String qrCodeImagePath = result.getBarcodeImagePath();
 
                 // Converte o caminho da imagem em um Bitmap
-                Bitmap qrCodeBitmap = BitmapFactory.decodeFile(qrCodeImagePath);
+                //Bitmap qrCodeBitmap = BitmapFactory.decodeFile(qrCodeImagePath);
 
                 // Salva a foto do QR code na galeria
-                saveQRCodeImageToGallery(this, qrCodeBitmap);
+                //saveQRCodeImageToGallery(this, qrCodeBitmap);
 
                 // Carregar a URL na WebView
                 webView.loadUrl(qrCodeUrl);
+
             } else {
                 Toast.makeText(this, "Erro ao ler o QR code.", Toast.LENGTH_SHORT).show();
             }
@@ -128,6 +136,52 @@ public class MainActivity extends AppCompatActivity {
     private boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    private void captureScreenAndSave() {
+        // Capturar a tela como um Bitmap
+        TextureView textureView = new TextureView(this);
+        textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+            @Override
+            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                Bitmap screenshot = textureView.getBitmap();
+
+                // Salvar o Bitmap como uma imagem
+                try {
+                    File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "eCheckin");
+                    if (!directory.exists()) {
+                        directory.mkdirs();
+                    }
+
+                    String fileName = "screenshot_" + System.currentTimeMillis() + ".png";
+                    File file = new File(directory, fileName);
+
+                    FileOutputStream fos = new FileOutputStream(file);
+                    screenshot.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    fos.flush();
+                    fos.close();
+
+                    Toast.makeText(MainActivity.this, "Captura de tela salva com sucesso.", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Erro ao salvar a captura de tela.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {}
+
+            @Override
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                return false;
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
+        });
+
+        // Adicionar a TextureView à hierarquia de visualização para que ela seja desenhada
+        addContentView(textureView, new ViewGroup.LayoutParams(1, 1));
     }
 
 

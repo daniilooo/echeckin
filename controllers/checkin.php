@@ -26,11 +26,11 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         $idCheckin = $daoCheckin->inserirCheckin($checkin);        
 
         if($idCheckin > 0){
-            echo "<script>alert('Checkin realizado com sucesso.')</script>";
+            //echo "<script>alert('Checkin realizado com sucesso.')</script>";
             header("Location: ../cliente/index2.php?checkin=true");
             exit;
         } else {
-            echo "<script>alert('Não foi possível realizar o checkin, contate o administrador do sistema.')</script>";
+            //echo "<script>alert('Não foi possível realizar o checkin, contate o administrador do sistema.')</script>";
             header("Location: ../cliente/index2.php?checkin=false");
             exit;
         }

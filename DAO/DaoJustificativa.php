@@ -27,10 +27,11 @@ class DaoJustificativa
         $local = $justificativa->getIdLocal();
         $motivo = $justificativa->getJustificativa();
         $dataHora = $justificativa->getDataHora();
+        $evidencia = $justificativa->getEvidencia();
 
         try {
-            $stmt = $this->conexao->prepare("INSERT INTO {$this->TBL_JUSTIFICATIVA} VALUES (null, ?,?,?,?)");
-            $stmt->bind_param("iiss", $usuario, $local, $motivo, $dataHora);
+            $stmt = $this->conexao->prepare("INSERT INTO {$this->TBL_JUSTIFICATIVA} VALUES (null, ?,?,?,?,?)");
+            $stmt->bind_param("iisss", $usuario, $local, $motivo, $dataHora, $evidencia);
 
             if ($stmt->execute()) {
                 return $stmt->insert_id;

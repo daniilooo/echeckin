@@ -6,13 +6,15 @@ class Justificativa{
     private $idLocal;
     private $justificativa;
     private $dataHora;
+    private $evidencia;
 
-    function __construct($idJustificativa, $idUsuario, $idLocal, $justificativa, $dataHora){
+    function __construct($idJustificativa, $idUsuario, $idLocal, $justificativa, $dataHora, $evidencia){
         $this->setIdJustificativa($idJustificativa);
         $this->setIdUsuario($idUsuario);
         $this->setIdLocal($idLocal);
         $this->setJustificativa($justificativa);
         $this->setDataHora($dataHora);
+        $this->setEvidencia($evidencia);
     }
 
     function setIdJustificativa($idJustificativa){
@@ -35,6 +37,10 @@ class Justificativa{
         $this->dataHora = $dataHora;
     }
 
+    function setEvidencia($evidencia){
+        $this->evidencia = $evidencia;
+    }
+
     function getIdJustificativa(){
         return $this->idJustificativa;
     }
@@ -53,6 +59,10 @@ class Justificativa{
 
     function getDataHora(){
         return $this->dataHora;
+    }
+
+    function getEvidencia(){
+        return $this->evidencia;
     }
 
     function __toString(){

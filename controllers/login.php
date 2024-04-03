@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
 
         } else {
-            header('Location: ../cliente/index2.php');
+            header('Location: ../cliente/index.php');
             exit;
         }
 

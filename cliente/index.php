@@ -48,9 +48,28 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
         if(isset($_GET['isLogin'])){
             echo "<script>alert('Usuário ou senha incorretos.')</script>";
         }
+
+        /*
+        1 - guibor
+        2 - udLog
+        */
+
+        $empresa = 1;
+        function empresa($empresa){
+            switch($empresa){
+                case 1:
+                    echo "../public/img/guiborLog.png";
+                    break;
+                case 2:
+                    echo "../public/img/udLog.png";
+                    break;
+                default:
+                    echo "Parametrize os dados da empresa.";
+            }
+        }
     ?>
     <div class="container mt-5 fluid">
-        <div class="row justify-content-center col-6 mb-3"><img class="justify-content-center logo" src="../public/img/udLog.png"></div>
+        <div class="row justify-content-center col-6 mb-3"><img class="justify-content-center logo" src="<?php empresa(1) ?>"></div>
         <div class=" container">
             <div class="row justify-content-center">
                 <div class="col-md-6">

@@ -19,9 +19,23 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     if(isset($_GET['checkin'])){
         $checkin = $_GET['checkin'];
         if($checkin){
-            echo "<script>alert('Checkin no local realizado com sucesso')</script>";            
+            echo " <script>
+                        Swal.fire({
+                        title: 'eCheckin',
+                        text: 'Checkin realizado com sucesso',
+                        icon: 'warning', // Ícone do alerta (opcional)
+                        confirmButtonText: 'OK' // Texto do botão de confirmação (opcional)
+                        });
+                    </script>";            
         } else {
-            echo "<script>alert('Não foi possível fazer o chekin, contate o adminsitrador do sistema.')</script>";
+            echo " <script>
+                        Swal.fire({
+                        title: 'eCheckin',
+                        text: 'Não foi possível realizar o checkin.',
+                        icon: 'warning', // Ícone do alerta (opcional)
+                        confirmButtonText: 'OK' // Texto do botão de confirmação (opcional)
+                        });
+                    </script>";
         }
     }
 } else {
@@ -42,6 +56,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>eCheckin - Cliente</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
         body {
             background-color: #f0f0f0;
@@ -109,18 +124,54 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Atividades</h5>
-                        <p class="card-text">Atividades de usuários</p>
-                        <!--<a href="#" class="btn btn-primary" onclick="abrirLeitorQRCode()">Realizar checkin</a>-->
-                        <button id="btnRealizarCheckin" class="btn btn-primary">Realizar Checkin</button>
-                        <a href="#" class="btn btn-primary">Justificativa</a>
+                        <h5 class="card-title">Checkin</h5>
+                        <p class="card-text">Realizar checkin em local</p>                        
+                        <button id="btnRealizarCheckin" class="btn btn-primary">Realizar Checkin</button>                        
                     </div>
                 </div>
             </div>
             
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Justificativas</h5>
+                        <p class="card-text">Quando não for possível realizar o checkin no local, o formulário de justificativa deve ser preenchido em enviado justamente com a evidência.</p>                        
+                        <a href="realizarjustificativa.php"class="btn btn-warning">Formulário de justificativa</a>                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Gerenciar acesso</h5>
+                        <p class="card-text">Alteração da senha de acesso do usuário</p>                        
+                        <a href="gerenciarAcesso.php" class="btn btn-danger">Gerenciar acesso</a>                        
+                    </div>
+                </div>
+            </div>
             
         </div>
     </div>
+    
+    <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Sair do sistema</h5>
+                        <p class="card-text">Sair do sistema</p>                        
+                        <button class="btn btn-danger" onClick ="sair()">Sair</button>                        
+                    </div>
+                </div>
+            </div>
+
+    <script>
+        function sair(){
+            window.location.href = "../controllers/sair.php";
+        }
+    </script>
+
+
+
 
     <script>
         document.getElementById("btnRealizarCheckin").addEventListener("click", function() {
