@@ -44,45 +44,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>eCheckin - by Guibor Log</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <style>
-            body {
-                background-color: #f0f0f0;
-            }
-
-            .navbar {
-                background-color: #007bff;
-            }
-
-            .navbar-dark .navbar-nav .nav-link {
-                color: white;
-            }
-
-            .container-fluid {
-                padding-top: 20px;
-            }
-
-            .card {
-                margin-bottom: 20px;
-                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-            }
-
-            .user-box {
-                border-radius: 5px
-            }
-
-            footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                background-color: #007bff;
-                /* Cor de fundo da faixa */
-                color: white;
-                /* Cor do texto */
-                text-align: center;
-                line-height: 20px;
-                /* Altura da faixa */
-            }
-        </style>
+        <link rel="stylesheet" href="css/estilo.css">
     </head>
 
     <body>
@@ -118,6 +80,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                         <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link exit-box" href="../controllers/sairAdm.php"><strong>Sair do<br>eCheckin</strong></a>
                     </li>
                 </ul>
             </div>

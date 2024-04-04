@@ -115,6 +115,9 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>eCheckin - Gerenciar Usuários</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/estilo.css">
+        
+        <!--
         <style>
             body {
                 background-color: #f0f0f0;
@@ -140,6 +143,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                 border-radius: 5px;
             }
         </style>
+        -->
     </head>
 
     <body>
@@ -169,11 +173,14 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
-                    </li>
+                    </li>                    
                     <li class="nav-item">
                         <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link exit-box" href="../controllers/sairAdm.php"><strong>Sair do<br>eCheckin</strong></a>
                     </li>
                 </ul>
             </div>

@@ -100,6 +100,7 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
                         </a>
                     </li>
+                    
                 </ul>
             </div>
         </nav>

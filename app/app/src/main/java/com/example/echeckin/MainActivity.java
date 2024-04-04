@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import java.sql.Time;
 
 public class MainActivity extends AppCompatActivity {
     private WebView webView;
+    private boolean qrCodeScanned = false;
+    private IntentIntegrator integrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +65,15 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
+
+
         if (result != null) {
+
             if (result.getContents() != null) {
 
                 // URL lida do QR code
                 String qrCodeUrl = result.getContents();
-                captureScreenAndSave();
+
 
                 // Obtém o caminho da imagem do QR code
                 //String qrCodeImagePath = result.getBarcodeImagePath();
@@ -140,61 +146,58 @@ public class MainActivity extends AppCompatActivity {
 
     private void captureScreenAndSave() {
         // Capturar a tela como um Bitmap
-        TextureView textureView = new TextureView(this);
-        textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-            @Override
-            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                Bitmap screenshot = textureView.getBitmap();
+        webView.measure(View.MeasureSpec.makeMeasureSpec(
+                        webView.getWidth(), View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        webView.layout(0, 0, webView.getMeasuredWidth(), webView.getMeasuredHeight());
+        webView.setDrawingCacheEnabled(true);
+        webView.buildDrawingCache(true);
+        Bitmap screenshot = Bitmap.createBitmap(webView.getDrawingCache());
+        webView.setDrawingCacheEnabled(false);
 
-                // Salvar o Bitmap como uma imagem
-                try {
-                    File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "eCheckin");
-                    if (!directory.exists()) {
-                        directory.mkdirs();
-                    }
-
-                    String fileName = "screenshot_" + System.currentTimeMillis() + ".png";
-                    File file = new File(directory, fileName);
-
-                    FileOutputStream fos = new FileOutputStream(file);
-                    screenshot.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                    fos.flush();
-                    fos.close();
-
-                    Toast.makeText(MainActivity.this, "Captura de tela salva com sucesso.", Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(MainActivity.this, "Erro ao salvar a captura de tela.", Toast.LENGTH_SHORT).show();
-                }
+        // Salvar o Bitmap como uma imagem
+        try {
+            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "eCheckin");
+            if (!directory.exists()) {
+                directory.mkdirs();
             }
 
-            @Override
-            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {}
+            String fileName = "screenshot_" + System.currentTimeMillis() + ".png";
+            File file = new File(directory, fileName);
 
-            @Override
-            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-                return false;
-            }
+            FileOutputStream fos = new FileOutputStream(file);
+            screenshot.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
 
-            @Override
-            public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
-        });
-
-        // Adicionar a TextureView à hierarquia de visualização para que ela seja desenhada
-        addContentView(textureView, new ViewGroup.LayoutParams(1, 1));
+            Toast.makeText(this, "Captura de tela salva com sucesso.", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erro ao salvar a captura de tela.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
 
-    public void startQRCodeScanner() {
-        IntentIntegrator integrator = new IntentIntegrator(this);
 
-        integrator.setDesiredBarcodeFormats("QR_CODE");
+    // Método para iniciar a leitura do QR code
+    private void startQRCodeScan() {
+        integrator = new IntentIntegrator(this);
 
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
         integrator.setPrompt("Aponte para o QR code");
         integrator.setOrientationLocked(true);
-
-        integrator.setTorchEnabled(true);
+        integrator.setBeepEnabled(false);
         integrator.initiateScan();
+
+        // Configurar um temporizador para cancelar a leitura após o tempo limite
+        new Handler().postDelayed(() -> {
+            if (!qrCodeScanned) { // Se o código QR não foi lido
+                // Cancelar a leitura e fechar o leitor de QR code manualmente
+                //integrator.stopScan();
+                integrator.setTimeout(3000);
+                Toast.makeText(this, "Leitura do QR code expirada", Toast.LENGTH_SHORT).show();
+            }
+        }, 3000); // 3 segundos de tempo limite
     }
 }

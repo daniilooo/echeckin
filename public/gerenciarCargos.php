@@ -62,6 +62,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>eCheckin - Gerenciar cargos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilo.css">
+    <!--
     <style>
         body {
             background-color: #f0f0f0;
@@ -97,10 +99,11 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             line-height: 20px;
         }
     </style>
+    -->
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="index2.php">eCheckin</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,11 +128,14 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
-                    </li>
+                    </li>                    
                     <li class="nav-item">
-                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario() ?>" class="nav-link user-box" style="background-color: #B0C4DE;">
+                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link exit-box" href="../controllers/sairAdm.php"><strong>Sair do<br>eCheckin</strong></a>
                     </li>
                 </ul>
             </div>

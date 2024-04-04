@@ -207,25 +207,19 @@ class DaoUsuario
 
         try {
             $stmt = $this->conexao->prepare("SELECT SENHA FROM {$this->TBL_USUARIO} WHERE ID_USUARIO = ?");
-            $stmt->bind_param("i", $idUsuario);
+            $stmt->bind_param("s", $idUsuario);
             $stmt->execute();
-            $stmt->bind_result($senhaBd);
-            $stmt->fetch();
+            $result = $stmt->get_result();
+            
+            if($result->num_rows >0){
+                $row = $result->fetch_assoc();
+                $senhaBd = $row['SENHA'];
+            } 
 
-            if ($senhaBd != null && password_verify($senhaBd, $senhaUsuario)) {
+            if(password_verify($senhaUsuario, $senhaBd)){
 
-                $stmt = $this->conexao->prepare("UPDATE {$this->TBL_USUARIO} SET SENHA = ? WHERE ID_USUARIO = ?");
-                $stmt->bind_param("si", password_hash($novaSenha, PASSWORD_DEFAULT), $idUsuario);
-
-                if ($stmt->execute()) {
-                    return $stmt->affected_rows;
-                } else {
-                    return -1;
-                }
-
-            } else {
-                return -3;
             }
+
 
         } catch (Exception $e) {
             $this->inserirErro($e->getMessage(), "DaoUsuario.alterarSenha", $this->idUsuarioSessao);
