@@ -14,12 +14,13 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     
     $idUsuario = $_SESSION['idUsuario'];
     $conexao = new Conexao();
-    $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);    
+    $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);
     
-
+    
     if(isset($_GET['idLocal'])){
         $idLocal = $_GET['idLocal'];
         $checkin = new Checkin(null, $idLocal, $idUsuario, (new DateTime())->format('Y-m-d H:i:s'));
+        $imagem = $_GET['imagem'];
         
         $daoCheckin = new DaoCheckin($conexao->conectar(), $idUsuario);        
 
@@ -34,7 +35,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
             header("Location: ../cliente/index2.php?checkin=false");
             exit;
         }
-    }      
+    }     
 
 } else {
     echo "<script>alert('Para utilizar o sistema eCheckin é necessário fazer login.');</script>";
