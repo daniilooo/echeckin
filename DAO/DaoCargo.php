@@ -39,7 +39,6 @@ class DaoCargo{
             $this->inserirErro($e->getMessage(), "DaoCargo.inserirCargo", $this->idUsuarioSessao);
             return null;    
         }
-
     }
 
     function selecionarCargo($idCargo){

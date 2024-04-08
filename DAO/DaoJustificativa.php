@@ -56,7 +56,7 @@ class DaoJustificativa
             $row = $result->fetch_assoc();
 
             if ($row != null) {
-                return new Justificativa($idJustificativa, $row['FK_USUARIO'], $row['FK_LOCAL'], $row['JUSTIFICATIVA'], $row['DATA_HORA']);
+                return new Justificativa($idJustificativa, $row['FK_USUARIO'], $row['FK_LOCAL'], $row['JUSTIFICATIVA'], $row['DATA_HORA'], null);
             } else {
                 return null;
             }
@@ -76,7 +76,7 @@ class DaoJustificativa
             $result = $stmt->get_result();
 
             while ($row = $result->fetch_assoc()) {
-                $justificativa = new Justificativa($row['ID_JUSTIFICATIVA'], $row['FK_USUARIO'], $row['FK_LOCAL'], $row['JUSTIFICATIVA'], $row['DATA_HORA']);
+                $justificativa = new Justificativa($row['ID_JUSTIFICATIVA'], $row['FK_USUARIO'], $row['FK_LOCAL'], $row['JUSTIFICATIVA'], $row['DATA_HORA'], null);
                 $listaJustificativas[] = $justificativa;
             }
 
@@ -98,7 +98,7 @@ class DaoJustificativa
             $result = $stmt->get_result();
 
             while($row = $result->fetch_assoc()){
-                $justificativa = new Justificativa($row['ID_JUSTIFICATIVA'], $row['FK_USUARIO'], $row['FK_LOCAL'], $row['JUSTIFICATIVA'], $row['DATA_HORA']);
+                $justificativa = new Justificativa($row['ID_JUSTIFICATIVA'], $row['FK_USUARIO'], $row['FK_LOCAL'], $row['JUSTIFICATIVA'], $row['DATA_HORA'], null);
                 $listaDeJustificativas[] = $justificativa;
             }
 

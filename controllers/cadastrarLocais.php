@@ -42,9 +42,7 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
                 header("Location: ../public/gerenciarLocais.php?addSucces=0");
             }
 
-        }
-        
-        
+        }       
         
     }
 

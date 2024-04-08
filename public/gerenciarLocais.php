@@ -12,7 +12,6 @@ if (!isset($_SESSION['login'])) {
 }
 
 
-
 if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     $idUsuario = $_SESSION['idUsuario'];
     $conexao = new Conexao();
@@ -196,7 +195,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                             pageLength: 10,
                             lengthChange: false,
                             info: false,
-                            searching: false,
+                            searching: true,
                             language: {
                                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                             }
@@ -204,7 +203,6 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     });
                     
                 </script>
-
     </body>
 
     </html>

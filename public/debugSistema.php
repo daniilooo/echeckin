@@ -38,43 +38,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <title>eCheckin - Gerenciar Usuários</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilo.css">
-    <!--
-    <style>
-        body {
-            background-color: #f0f0f0;
-        }
-
-        .navbar {
-            background-color: #007bff;
-        }
-
-        .navbar-dark .navbar-nav .nav-link {
-            color: white;
-        }
-
-        .container-fluid {
-            padding-top: 20px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-        }
-
-        .user-box {
-            border-radius: 5px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            line-height: 20px;
-        }
-    </style>
-    -->
+    <link href="../public/js/DataTables/datatables.css" rel="stylesheet">   
 
 </head>
 
@@ -134,9 +98,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                             </div>
                             <button type="submit" class="btn btn-primary">Buscar</button>
                         </form>
-                        <div class="lead">
-                            <p class="lead">Essa página mostra apenas os últimos 10 registros na tabela DEBUG do sistema.</br>Para verificar os logs anteriores, consulte diretamente o banco de dados.</p>
-                        </div>
+                        
                         <!-- Tabela de usuários -->
                         <div class="mx-auto"> <!-- Adicionado para centralizar horizontalmente -->
                             <table class="table">
@@ -168,7 +130,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                                             <td>
                                                 <?php echo nomeUsuario($daoUsuario, $erro->getUsuario()) ?>
                                             </td>
-                                        <tr>
+                                        </tr>
                                         <?php } ?>
                                 </tbody>
                             </table>
@@ -189,8 +151,23 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     </script>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>                
+                <script src="../public/js/DataTables/datatables.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        // Aplicar DataTables às tabelas com classe "table"
+                        $('.table').DataTable({
+                            paging: true,
+                            pageLength: 10,
+                            lengthChange: false,
+                            info: false,
+                            searching: false,                            
+                        });
+                    });
+                    
+                </script>
 </body>
 
 </html>

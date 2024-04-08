@@ -32,43 +32,7 @@ if ($sessionStatus = PHP_SESSION_ACTIVE && $_SESSION['login']) {
         <title>eCheckin - Gerar relatórios</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/estilo.css">
-        <!--
-        <style>
-            body {
-                background-color: #f0f0f0;
-            }
-
-            .navbar {
-                background-color: #007bff;
-            }
-
-            .navbar-dark .navbar-nav .nav-link {
-                color: white;
-            }
-
-            .container-fluid {
-                padding-top: 20px;
-            }
-
-            .card {
-                margin-bottom: 20px;
-                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-            }
-
-            footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                background-color: #007bff;
-                /* Cor de fundo da faixa */
-                color: white;
-                /* Cor do texto */
-                text-align: center;
-                line-height: 20px;
-                /* Altura da faixa */
-            }
-        </style>
-        -->        
+        
     </head>
 
     <body>

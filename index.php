@@ -8,7 +8,7 @@ if(!isset($_SESSION['login'])){
 }
 
 if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){    
-    header("Location: index2.php?Login=1");
+    header("Location: public/index2.php?Login=1");
 }
 
 if(isset($_GET['isLogin'])){
@@ -49,7 +49,7 @@ function empresa($empresa){
 <div class="container-fluid">  
   <div class="row justify-content-center">
     <div class="col-md-4">      
-      <img src="<?php empresa($empresa)?>" class="img-fluid" alt="Imagem responsiva">
+      <img src="<?php empresa($empresa)?>" class="img-fluid" alt="logotipo">
       <div class="card mt-5">        
         <div class="card-header text-center">
           <h3>eCheckin</h3>

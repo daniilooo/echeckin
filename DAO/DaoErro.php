@@ -30,14 +30,12 @@ class DaoErro
             return false;
         }
     }
-
-
-
+    
     function gerarListaErros()
     {
         $listaErros = [];
 
-        $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_ERRO} ORDER By ID_ERRO desc LIMIT 10");
+        $stmt = $this->conexao->prepare("SELECT * FROM {$this->TBL_ERRO} ORDER By ID_ERRO desc ");
         $stmt->execute();
 
         $result = $stmt->get_result();

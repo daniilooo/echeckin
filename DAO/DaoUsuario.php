@@ -67,7 +67,6 @@ class DaoUsuario
 
     function selecionarUsuario($idUsuario)
     {
-
         $nome = null;
         $matricula = null;
         $empresa = null;
@@ -116,8 +115,6 @@ class DaoUsuario
             return -2;
         }
     }
-    
-
 
     function contagemDeUsuarios()
     {
@@ -257,7 +254,8 @@ class DaoUsuario
         }
     }
 
-    function gerarListaUsuarioPorEmpresa($idEmpresa){
+    function gerarListaUsuarioPorEmpresa($idEmpresa)
+    {
         $listaUsuario = [];
         try{
             $stmt = $this->conexao->prepare("SELECT ID_USUARIO, NOME, MATRICULA, CARGO, LOGIN FROM {$this->TBL_USUARIO} WHERE EMPRESA = ?");
@@ -278,6 +276,7 @@ class DaoUsuario
             return null;
         }
     }
+
 }
 
 ?>
