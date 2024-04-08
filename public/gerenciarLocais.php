@@ -67,44 +67,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>eCheckin - Gerenciar locais</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/estilo.css">
-        <!--
-        <style>
-            body {
-                background-color: #f0f0f0;
-            }
-
-            .navbar {
-                background-color: #007bff;
-            }
-
-            .navbar-dark .navbar-nav .nav-link {
-                color: white;
-            }
-
-            .container-fluid {
-                padding-top: 20px;
-            }
-
-            .card {
-                margin-bottom: 20px;
-                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-            }
-
-            footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                background-color: #007bff;
-                /* Cor de fundo da faixa */
-                color: white;
-                /* Cor do texto */
-                text-align: center;
-                line-height: 20px;
-                /* Altura da faixa */
-            }
-        </style>
-        -->
+        <link rel="stylesheet" href="css/estilo.css">       
+        <link href="../public/js/DataTables/datatables.css" rel="stylesheet">        
     </head>
 
     <body>
@@ -209,19 +173,37 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                 <?php } ?>
                 <footer>
                     by PRODEV - Desenvolvimento de sistemas.
-                </footer>
-                <script>
+                </footer>               
 
+
+                <script>
                     function gerarCheckPoint(idLocal) {
                         window.location.href = "checkpoint.php?idLocal=" + idLocal;
                     }
-
-
                 </script>
+                
                 <!-- Bootstrap JS and dependencies -->
                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>                
+                <script src="../public/js/DataTables/datatables.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        // Aplicar DataTables às tabelas com classe "table"
+                        $('.table').DataTable({
+                            paging: true,
+                            pageLength: 10,
+                            lengthChange: false,
+                            info: false,
+                            searching: false,
+                            language: {
+                                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                            }
+                        });
+                    });
+                    
+                </script>
 
     </body>
 

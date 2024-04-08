@@ -86,29 +86,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <title>Relatório - <?php echo $empresa->getRazaoSocial() ?></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilo.css">
-    <!--
-    <style>
-        body {
-            background-color: #f0f0f0;
-        }
-
-        .navbar {
-            background-color: #007bff;
-        }
-
-        .navbar-dark .navbar-nav .nav-link {
-            color: white;
-        }
-
-        .container-fluid {
-            padding-top: 20px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-        }
-    </style>
-    -->
+    <link href="../public/js/DataTables/datatables.css" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -229,10 +208,25 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                <!-- Bootstrap JS and dependencies -->
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>                
+                <script src="../public/js/DataTables/datatables.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        // Aplicar DataTables às tabelas com classe "table"
+                        $('.table').DataTable({
+                            paging: true,
+                            pageLength: 10,
+                            lengthChange: false,
+                            info: false,
+                            searching: false,                            
+                        });
+                    });
+                    
+                </script>
 
 </body>
 
