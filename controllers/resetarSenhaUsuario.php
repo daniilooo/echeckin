@@ -18,9 +18,8 @@ if($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']){
     
     if(isset($_GET['idUsuario'])){
         
-        $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);
+        $daoUsuario = new DaoUsuario($conexao->conectar(), $idUsuario);       
         
-        echo $_GET['idUsuario'];
 
         if($daoUsuario->resetarSenha($_GET['idUsuario']) > 0){
             $log = new Log(null, "Senha do usuário resetada.\nID do usuario: ".$_GET['idUsuario'], (new DateTime())->format('Y-m-d H:i:s'), $idUsuario);

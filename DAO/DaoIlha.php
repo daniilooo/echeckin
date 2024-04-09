@@ -19,7 +19,6 @@ class DaoIlha{
         $daoErro->inserirErro($erro);
     }
 
-
     function inserirIlha(Ilha $ilha){
         $idEmpresa = $ilha->getIdEmpresa();
         $descIlha = $ilha->getDescIlha();

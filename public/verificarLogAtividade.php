@@ -49,52 +49,12 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <title>eCheckin - Gerenciar Usuários</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilo.css">
-    <!--
-    <style>
-        body {
-            background-color: #f0f0f0;
-        }
-
-        .navbar {
-            background-color: #007bff;
-        }
-
-        .navbar-dark .navbar-nav .nav-link {
-            color: white;
-        }
-
-        .container-fluid {
-            padding-top: 20px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-        }
-
-        .user-box {
-            border-radius: 5px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #007bff;
-            /* Cor de fundo da faixa */
-            color: white;
-            /* Cor do texto */
-            text-align: center;
-            line-height: 20px;
-            /* Altura da faixa */
-        }
-    </style>
-    -->
 </head>
 
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="index2.php">eCheckin</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,11 +79,14 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
-                    </li>
+                    </li>                    
                     <li class="nav-item">
                         <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link exit-box" href="../controllers/sairAdm.php"><strong>Sair do<br>eCheckin</strong></a>
                     </li>
                 </ul>
             </div>

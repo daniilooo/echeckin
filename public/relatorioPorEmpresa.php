@@ -92,7 +92,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
 <body>
         
-    <!-- Navbar -->
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="index2.php">eCheckin</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -118,15 +118,18 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="manualDoSistema.php">Manual do<br>sistema</a>
-                    </li>
+                    </li>                    
                     <li class="nav-item">
-                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario() ?>" class="nav-link user-box" style="background-color: #B0C4DE;">
+                        <a href="cadastroDeUsuario.php?idUsuarioAlt=<?php echo $usuario->getIdUsuario()?>" class="nav-link user-box" style="background-color: #B0C4DE;">
                             <?php echo $usuario->getNome() ?><br>Gerenciar conta
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link exit-box" href="../controllers/sairAdm.php"><strong>Sair do<br>eCheckin</strong></a>
+                    </li>
                 </ul>
             </div>
-        </nav>    
+        </nav> 
                 
         
     <!-- Content -->

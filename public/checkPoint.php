@@ -6,19 +6,29 @@ include_once (__DIR__ . '/../DAO/DaoEmpresa.php');
 session_start();
 $sessionStatus = session_status();
 
+function salvarLog($idUsuario, $local){
+    $conexao = new Conexao();
+    $daoEmpresa = new DaoEmpresa($conexao->conectar(), $idUsuario);
+    $daoLog = new DaoLog($conexao->conectar(), $idUsuario);
+    $empresa = $daoEmpresa->selecionarEmpresa($local->getFkEmpresa());    
+    $log = new Log(null, "Geração de placa de Checkpoint:\n".$empresa->getRazaoSocial()." - ".$local->getDescLocal(), (new DateTime())->format('Y-m-d H:i:s'), $idUsuario);    
+    $daoLog->inserirLog($log);
+}
+
 if (!isset($_SESSION['login'])) {
     $_SESSION['login'] = false;
 }
 
 if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
 
-
-    if (isset($_GET['idLocal'])) {
+    if (isset($_GET['idLocal'])) {        
+        $idUsuario = $_SESSION['idUsuario'];
         $idLocal = $_GET['idLocal'];
 
-        $daoLocal = new DaoLocal((new Conexao())->conectar(), 1);
+        $daoLocal = new DaoLocal((new Conexao())->conectar(), $idUsuario);
         $local = $daoLocal->selecionarLocal($idLocal);
-        $tipoEmpresa = (new DaoEmpresa((new Conexao())->conectar(), $_SESSION['idUsuario']))->tipoEmpresa($local->getFkEmpresa());
+        salvarLog($idUsuario, $local);
+        $tipoEmpresa = (new DaoEmpresa((new Conexao())->conectar(), $_SESSION['idUsuario']))->tipoEmpresa($local->getFkEmpresa());        
 
         function descTipoLocal($tipoEmpresa)
         {
@@ -31,8 +41,8 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     return "";
             }
         }
-
     }
+
 } else {
     echo "<script>alert('Para utilizar o sistema eCheckin é necessário fazer login.');
         window.location.href = '../index.php';    
