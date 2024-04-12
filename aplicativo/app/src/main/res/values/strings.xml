@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">eCheckin</string>
+    <string name="checkin">Realizar Checkin</string>
+    <string name="justificativa">Realizar justificativa</string>
+    <string name="acesso">Gerenciar acesso</string>
+    <string name="sair">Sair</string>
+    <string name="login">Login</string>
+    <string name="senha">Senha</string>
+    <string name="prodev">By Prodev - Desenvolvimento de sistemas</string>
+
+
+    <string name="form_justificativa">Formulário de Justificativa</string>
+
+</resources>

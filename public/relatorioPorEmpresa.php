@@ -86,8 +86,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <title>Relatório - <?php echo $empresa->getRazaoSocial() ?></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilo.css">
-    <link href="../public/js/DataTables/datatables.css" rel="stylesheet">
-    
+    <link href="../public/js/DataTables/datatables.css" rel="stylesheet">    
 </head>
 
 <body>
@@ -211,25 +210,24 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
         </div>
     </div>
 
-                <!-- Bootstrap JS and dependencies -->
-                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>                
-                <script src="../public/js/DataTables/datatables.js"></script>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>                
+<script src="../public/js/DataTables/datatables.js"></script>
 
-                <script>
-                    $(document).ready(function() {
-                        // Aplicar DataTables às tabelas com classe "table"
-                        $('.table').DataTable({
-                            paging: true,
-                            pageLength: 10,
-                            lengthChange: false,
-                            info: false,
-                            searching: false,                            
-                        });
-                    });
-                    
-                </script>
+<script>
+    $(document).ready(function() {
+        // Aplicar DataTables às tabelas com classe "table"
+        $('.table').DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthChange: false,
+        info: false,
+        searching: false,                            
+        });
+    });                    
+</script>
 
 </body>
 

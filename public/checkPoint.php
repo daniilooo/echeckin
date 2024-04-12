@@ -133,7 +133,7 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
     <script type="text/javascript">
         function generateQRCode(idLocal) {
 
-            const local = 3;
+            const local = 4;
             var url = null;            
 
             switch (local) {
@@ -145,6 +145,10 @@ if ($sessionStatus == PHP_SESSION_ACTIVE && $_SESSION['login']) {
                     break;
                 case 3:
                     url = "https://sysdesk.com.br/echeckin/controllers/checkin.php?idLocal="
+                    break;
+                case 4:
+                    url = "https://udlog.online/echeckin/controllers/checkin.php?idLocal="
+                    break;
                 default:
                     break;
             }

@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ECheckin" parent="Theme.Material3.DayNight">
+        <item name="android:colorPrimary">@color/actionBar</item>
+        <item name="colorOnPrimary">@color/actionBar</item>
+        <item name="colorSecondary">@color/cinzaOpaco</item>
+        <item name="android:textColor">@color/cinzaTexto</item>
+        <item name="android:windowBackground">#000000</item>
+    </style>
+</resources>

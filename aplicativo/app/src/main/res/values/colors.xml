@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="actionBar">#FF0000</color>
+    <color name="primaryTextColor">#363636</color>
+    <color name="secAction">#B22222</color>
+    <color name="corFundo">#FFFFFFFF</color>
+    <color name="gold">#FFD700</color>
+    <color name="aliceBlue">#F0F8FF</color>
+    <color name="azure">#F0FFFF</color>
+    <color name="brancoFantasma">#F8F8FF</color>
+    <color name="azulRoyal">#4169E1</color>
+    <color name="azulPetroleo">#4682B4</color>
+    <color name="cinzaBrilhante">#778899</color>
+    <color name="cinzaOpaco">#708090</color>
+    <color name="cinzaTexto">#4F4F4F</color>
+</resources>
