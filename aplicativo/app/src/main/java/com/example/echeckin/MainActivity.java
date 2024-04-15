@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         btnJustificativa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, JustificativaActivity.class);
+                Intent intent = new Intent(getApplicationContext(), JustificativaActivity.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btnGerenciarAcesso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, GerenciarAcessoActivity.class);
+                Intent intent = new Intent(getApplicationContext(), GerenciarAcessoActivity.class);
                 startActivity(intent);
             }
         });
